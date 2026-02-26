@@ -38,7 +38,13 @@ serve(async (req) => {
         email: email.trim(),
         attributes: {
           FIRSTNAME: nome.trim(),
-          SMS: telefono.replace(/[\s\-().]/g, ""),
+          SMS: (() => {
+            let phone = telefono.replace(/[\s\-().]/g, "");
+            if (!phone.startsWith("+")) {
+              phone = phone.startsWith("00") ? "+" + phone.slice(2) : "+39" + phone;
+            }
+            return phone;
+          })(),
         },
         listIds: [2], // Default list, user can change
         updateEnabled: true,
