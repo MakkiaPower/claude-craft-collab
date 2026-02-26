@@ -1,4 +1,6 @@
 import { useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/astrobastardo-logo.png";
 
 const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -16,7 +18,7 @@ const Index = () => {
     setErrors((prev) => ({ ...prev, [field]: false }));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors = {
       nome: !formData.nome.trim(),
@@ -28,10 +30,18 @@ const Index = () => {
     if (Object.values(newErrors).some(Boolean)) return;
 
     setSubmitting(true);
-    setTimeout(() => {
-      console.log("Iscrizione:", { ...formData, ts: new Date().toISOString() });
+    try {
+      const { data, error } = await supabase.functions.invoke("add-to-brevo", {
+        body: { nome: formData.nome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() },
+      });
+      if (error) throw error;
+      if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
       setSuccess(true);
-    }, 800);
+    } catch (err) {
+      console.error("Brevo error:", err);
+      toast({ variant: "destructive", title: "Errore", description: "Qualcosa è andato storto. Riprova." });
+      setSubmitting(false);
+    }
   };
 
   if (success) {
