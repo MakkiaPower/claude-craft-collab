@@ -39,7 +39,7 @@ const Index = () => {
       <div className="flex min-h-dvh items-center justify-center px-5 py-10">
         <div className="w-full max-w-[440px] text-center animate-enter-up">
           <div className="mb-6">
-            <img src={logo} alt="AstroBastardo" className="mx-auto h-20 w-20 object-contain mix-blend-multiply invert brightness-[1.2]" />
+            <img src={logo} alt="AstroBastardo" className="mx-auto h-20 w-20 object-contain" />
           </div>
           <h2 className="mb-3.5 text-[1.4rem] font-extrabold uppercase tracking-tight leading-tight">
             SEI DENTRO,<br /><span className="text-primary">BASTARDO.</span>
@@ -63,7 +63,7 @@ const Index = () => {
       <main className="w-full max-w-[440px] flex flex-col items-center text-center">
         {/* Logo */}
         <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
-          <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain mix-blend-multiply invert brightness-[1.2]" />
+          <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain" />
         </div>
 
         {/* Hero Title */}
