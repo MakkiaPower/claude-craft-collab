@@ -6,7 +6,8 @@ const isValidPhone = (v: string) => /^\+?[0-9]{8,15}$/.test(v.replace(/[\s\-().]
 
 const Index = () => {
   const [formData, setFormData] = useState({ nome: "", email: "", telefono: "" });
-  const [errors, setErrors] = useState({ nome: false, email: false, telefono: false });
+  const [errors, setErrors] = useState({ nome: false, email: false, telefono: false, privacy: false });
+  const [privacy, setPrivacy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -21,6 +22,7 @@ const Index = () => {
       nome: !formData.nome.trim(),
       email: !isValidEmail(formData.email),
       telefono: !isValidPhone(formData.telefono),
+      privacy: !privacy,
     };
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
@@ -164,12 +166,33 @@ const Index = () => {
             {submitting ? "UN ATTIMO..." : "FAMMI ENTRARE"}
           </button>
 
-          {/* Privacy */}
-          <p className="mt-5 text-[0.68rem] text-[#444] leading-relaxed">
-            Niente spam, niente cazzate. Ti scriviamo solo per il drop. I tuoi dati sono al sicuro —{" "}
-            <a href="#" className="text-muted-foreground underline underline-offset-2">
-              privacy policy
-            </a>
+          {/* Privacy Checkbox */}
+          <div className="mt-5 text-left">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={privacy}
+                onChange={(e) => {
+                  setPrivacy(e.target.checked);
+                  setErrors((prev) => ({ ...prev, privacy: false }));
+                }}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-primary"
+              />
+              <span className="text-[0.72rem] text-muted-foreground leading-relaxed">
+                Ho letto e accetto la{" "}
+                <a href="#" className="text-foreground underline underline-offset-2">
+                  Privacy Policy
+                </a>
+                . Acconsento al trattamento dei miei dati personali.
+              </span>
+            </label>
+            {errors.privacy && (
+              <p className="mt-1.5 ml-7 text-[0.72rem] font-medium text-destructive">Devi accettare la privacy policy</p>
+            )}
+          </div>
+
+          <p className="mt-3 text-[0.68rem] text-muted-foreground/50 leading-relaxed">
+            Niente spam, niente cazzate. Ti scriviamo solo per il drop.
           </p>
         </form>
       </main>
