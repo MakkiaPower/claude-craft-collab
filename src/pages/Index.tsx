@@ -55,10 +55,10 @@ const Index = () => {
             SEI DENTRO,<br /><span className="text-primary">BASTARDO.</span>
           </h2>
           <p className="mx-auto max-w-[320px] text-sm text-muted-foreground leading-relaxed">
-            Riceverai un messaggio su WhatsApp 24 ore prima dell'apertura dello shop. Tieni il telefono vicino.
+            Sei a un passo dall'entrare nel club ufficiale di AstroBastardo. Ti avviseremo su WhatsApp prima di tutti quando lo shop aprirà.
           </p>
           <p className="mt-5 text-[0.78rem] font-bold text-foreground">
-            Se non compri entro 10 minuti, il posto va a un altro.
+            Pochi posti, zero favoritismi. Solo chi è in lista entra per primo.
           </p>
           <span className="mt-6 inline-block rounded border border-premium/25 px-6 py-2.5 text-[0.65rem] font-bold uppercase tracking-[3px] text-premium">
             AstroBastardo — Drop 001
