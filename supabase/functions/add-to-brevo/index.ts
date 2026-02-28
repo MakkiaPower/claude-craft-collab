@@ -54,7 +54,12 @@ serve(async (req) => {
     if (!brevoRes.ok) {
       const errBody = await brevoRes.text();
       console.error("Brevo API error:", brevoRes.status, errBody);
-      throw new Error(`Brevo API error [${brevoRes.status}]: ${errBody}`);
+      // Treat duplicate contact/SMS as success
+      if (brevoRes.status === 400 && errBody.includes("duplicate_parameter")) {
+        console.log("Contact already exists, treating as success");
+      } else {
+        throw new Error(`Brevo API error [${brevoRes.status}]: ${errBody}`);
+      }
     }
 
     return new Response(
