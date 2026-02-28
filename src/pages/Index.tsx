@@ -150,6 +150,15 @@ const Index = () => {
             ) : "FAMMI ENTRARE"}
           </button>
 
+          {submitting && (
+            <div className="mt-2 w-full h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full"
+                style={{ animation: "progress 2s ease-in-out infinite" }}
+              />
+            </div>
+          )}
+
           {/* Privacy */}
           <div className="mt-5 text-left">
             <label className="flex items-start gap-3 cursor-pointer">
