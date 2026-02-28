@@ -137,9 +137,17 @@ const Index = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-2.5 w-full rounded bg-primary px-4 py-[18px] text-[0.85rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-colors duration-200 hover:brightness-90 active:brightness-75 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="mt-2.5 w-full rounded bg-primary px-4 py-[18px] text-[0.85rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all duration-200 hover:brightness-90 active:brightness-75 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {submitting ? "UN ATTIMO..." : "FAMMI ENTRARE"}
+            {submitting ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                STIAMO REGISTRANDO...
+              </span>
+            ) : "FAMMI ENTRARE"}
           </button>
 
           {/* Privacy */}
