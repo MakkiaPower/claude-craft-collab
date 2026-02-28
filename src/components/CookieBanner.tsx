@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { loadGA4 } from "@/lib/ga4";
 
 const CONSENT_KEY = "ab_cookie_consent";
 
-const CookieBanner = () => {
+const CookieBanner = forwardRef<HTMLDivElement>((_, ref) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 animate-enter-up p-4">
+    <div ref={ref} className="fixed bottom-0 inset-x-0 z-50 animate-enter-up p-4">
       <div className="mx-auto max-w-[440px] rounded-lg border border-input bg-background/95 backdrop-blur-sm p-5 shadow-lg">
         <p className="text-[0.78rem] text-muted-foreground leading-relaxed mb-4">
           Questo sito utilizza cookie analitici (Google Analytics) per capire come viene utilizzato.
@@ -57,6 +57,8 @@ const CookieBanner = () => {
       </div>
     </div>
   );
-};
+});
+
+CookieBanner.displayName = "CookieBanner";
 
 export default CookieBanner;
