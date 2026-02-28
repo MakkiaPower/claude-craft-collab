@@ -17,7 +17,17 @@ serve(async (req) => {
       throw new Error("BREVO_API_KEY is not configured");
     }
 
-    const { nome, cognome, email, telefono } = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Invalid request body" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { nome, cognome, email, telefono } = body;
 
     if (!nome || !cognome || !email || !telefono) {
       return new Response(
