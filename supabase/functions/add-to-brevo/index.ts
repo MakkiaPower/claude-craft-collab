@@ -90,6 +90,20 @@ serve(async (req) => {
     if (!brevoRes.ok) {
       const errBody = await brevoRes.text();
       console.error("Brevo API error:", brevoRes.status, errBody);
+
+      // Handle duplicate SMS/phone — treat as already registered
+      if (brevoRes.status === 400) {
+        try {
+          const parsed = JSON.parse(errBody);
+          if (parsed.code === "duplicate_parameter") {
+            return new Response(
+              JSON.stringify({ success: true, alreadyRegistered: true }),
+              { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+          }
+        } catch {}
+      }
+
       throw new Error("Brevo API error");
     }
 
