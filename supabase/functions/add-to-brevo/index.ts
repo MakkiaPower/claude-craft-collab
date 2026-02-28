@@ -37,7 +37,9 @@ serve(async (req) => {
       body: JSON.stringify({
         email: email.trim(),
         attributes: {
-          FIRSTNAME: nome.trim(),
+          FIRSTNAME: nome.trim().split(" ")[0],
+          LASTNAME: nome.trim().split(" ").slice(1).join(" ") || "",
+          NOME: nome.trim(),
           SMS: (() => {
             let phone = telefono.replace(/[\s\-().]/g, "");
             if (!phone.startsWith("+")) {
