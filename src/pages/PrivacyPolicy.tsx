@@ -85,7 +85,7 @@ const PrivacyPolicy = () => {
           <section>
             <h2 className="mb-2 text-sm font-bold uppercase tracking-wide text-foreground">8. Cookie</h2>
             <p>
-              Questo sito non utilizza cookie di profilazione. Vengono utilizzati esclusivamente cookie tecnici necessari al funzionamento del sito.
+              Questo sito utilizza cookie tecnici necessari al funzionamento e cookie analitici di terze parti (Google Analytics 4) per comprendere come il sito viene utilizzato. I cookie analitici vengono attivati solo dopo il consenso esplicito dell'utente tramite il banner cookie. Nessun dato viene utilizzato per finalità pubblicitarie.
             </p>
           </section>
         </div>
