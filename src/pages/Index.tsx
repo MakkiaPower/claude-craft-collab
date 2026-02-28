@@ -68,7 +68,7 @@ const Index = () => {
       <main className="w-full max-w-[440px] flex flex-col items-center text-center">
         {/* Logo */}
         <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
-          <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain" />
+          <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain" width={130} height={130} />
         </div>
 
         {/* Hero */}
