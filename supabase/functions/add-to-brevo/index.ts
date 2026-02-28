@@ -36,9 +36,31 @@ serve(async (req) => {
       );
     }
 
-    // Fire-and-forget: send to Brevo in background, respond immediately
+    const trimmedEmail = email.trim().toLowerCase();
+
+    // Check if contact already exists
+    const checkRes = await fetch(
+      `https://api.brevo.com/v3/contacts/${encodeURIComponent(trimmedEmail)}`,
+      {
+        method: "GET",
+        headers: {
+          "api-key": BREVO_API_KEY,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (checkRes.ok) {
+      // Contact already exists
+      return new Response(
+        JSON.stringify({ success: true, alreadyRegistered: true }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Create new contact
     const brevoPayload = JSON.stringify({
-      email: email.trim(),
+      email: trimmedEmail,
       attributes: {
         FIRSTNAME: nome.trim(),
         LASTNAME: cognome.trim(),
@@ -52,11 +74,10 @@ serve(async (req) => {
         })(),
       },
       listIds: [2],
-      updateEnabled: true,
+      updateEnabled: false,
     });
 
-    // Don't await — let it run in background
-    fetch("https://api.brevo.com/v3/contacts", {
+    const brevoRes = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
         "api-key": BREVO_API_KEY,
@@ -64,23 +85,18 @@ serve(async (req) => {
         Accept: "application/json",
       },
       body: brevoPayload,
-    }).then(async (res) => {
-      if (!res.ok) {
-        const errBody = await res.text();
-        if (res.status === 400 && errBody.includes("duplicate_parameter")) {
-          console.log("Contact already exists, treating as success");
-        } else {
-          console.error("Brevo API error:", res.status, errBody);
-        }
-      } else {
-        console.log("Contact added to Brevo successfully");
-      }
-    }).catch((err) => {
-      console.error("Brevo fetch error:", err);
     });
 
+    if (!brevoRes.ok) {
+      const errBody = await brevoRes.text();
+      console.error("Brevo API error:", brevoRes.status, errBody);
+      throw new Error("Brevo API error");
+    }
+
+    console.log("Contact added to Brevo successfully");
+
     return new Response(
-      JSON.stringify({ success: true }),
+      JSON.stringify({ success: true, alreadyRegistered: false }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {

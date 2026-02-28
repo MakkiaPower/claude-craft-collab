@@ -48,6 +48,11 @@ const Index = () => {
       const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
       if (error) throw error;
       if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
+      if (data?.alreadyRegistered) {
+        toast({ title: "Ci sei già! 🎉", description: "Questa email è già in lista. Ti avviseremo appena si apre lo shop!" });
+        setSubmitting(false);
+        return;
+      }
       setSuccess(true);
     } catch (err) {
       console.error("Brevo error:", err);
