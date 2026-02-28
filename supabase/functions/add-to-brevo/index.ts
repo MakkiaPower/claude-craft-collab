@@ -17,9 +17,9 @@ serve(async (req) => {
       throw new Error("BREVO_API_KEY is not configured");
     }
 
-    const { nome, email, telefono } = await req.json();
+    const { nome, cognome, email, telefono } = await req.json();
 
-    if (!nome || !email || !telefono) {
+    if (!nome || !cognome || !email || !telefono) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -37,9 +37,9 @@ serve(async (req) => {
       body: JSON.stringify({
         email: email.trim(),
         attributes: {
-          FIRSTNAME: nome.trim().split(" ")[0],
-          LASTNAME: nome.trim().split(" ").slice(1).join(" ") || "",
-          NOME: nome.trim(),
+          FIRSTNAME: nome.trim(),
+          LASTNAME: cognome.trim(),
+          NOME: `${nome.trim()} ${cognome.trim()}`,
           SMS: (() => {
             let phone = telefono.replace(/[\s\-().]/g, "");
             if (!phone.startsWith("+")) {
