@@ -10,8 +10,8 @@ const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 const isValidPhone = (v: string) => /^\+?[0-9]{8,15}$/.test(v.replace(/[\s\-().]/g, ""));
 
 const Index = () => {
-  const [formData, setFormData] = useState({ nome: "", email: "", telefono: "" });
-  const [errors, setErrors] = useState({ nome: false, email: false, telefono: false, privacy: false });
+  const [formData, setFormData] = useState({ nome: "", cognome: "", email: "", telefono: "" });
+  const [errors, setErrors] = useState({ nome: false, cognome: false, email: false, telefono: false, privacy: false });
   const [privacy, setPrivacy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -25,6 +25,7 @@ const Index = () => {
     e.preventDefault();
     const newErrors = {
       nome: !formData.nome.trim(),
+      cognome: !formData.cognome.trim(),
       email: !isValidEmail(formData.email),
       telefono: !isValidPhone(formData.telefono),
       privacy: !privacy,
@@ -35,7 +36,7 @@ const Index = () => {
     setSubmitting(true);
     try {
       const { data, error } = await supabase.functions.invoke("add-to-brevo", {
-        body: { nome: formData.nome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() },
+        body: { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() },
       });
       if (error) throw error;
       if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
@@ -95,6 +96,15 @@ const Index = () => {
             error={errors.nome}
             errorMessage="Inserisci il tuo nome"
             onChange={(v) => handleChange("nome", v)}
+          />
+          <FormField
+            label="COGNOME"
+            type="text"
+            placeholder="Il tuo cognome"
+            value={formData.cognome}
+            error={errors.cognome}
+            errorMessage="Inserisci il tuo cognome"
+            onChange={(v) => handleChange("cognome", v)}
           />
           <FormField
             label="EMAIL"
