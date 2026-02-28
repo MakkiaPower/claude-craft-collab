@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/astrobastardo-logo.png";
@@ -190,9 +191,9 @@ const Index = () => {
               />
               <span className="text-[0.72rem] text-muted-foreground leading-relaxed">
                 Ho letto e accetto la{" "}
-                <a href="#" className="text-foreground underline underline-offset-2">
+                <Link to="/privacy" className="text-foreground underline underline-offset-2">
                   Privacy Policy
-                </a>
+                </Link>
                 . Acconsento al trattamento dei miei dati personali.
               </span>
             </label>
