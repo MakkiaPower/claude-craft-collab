@@ -36,18 +36,34 @@ const Index = () => {
     if (Object.values(newErrors).some(Boolean)) return;
 
     setSubmitting(true);
+    const payload = { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() };
+
+    const attempt = async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+      try {
+        const { data, error } = await supabase.functions.invoke("add-to-brevo", {
+          body: payload,
+        });
+        clearTimeout(timeout);
+        if (error) throw error;
+        if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
+        return data;
+      } catch (err) {
+        clearTimeout(timeout);
+        throw err;
+      }
+    };
+
     try {
-      const invokePromise = supabase.functions.invoke("add-to-brevo", {
-        body: { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() },
-      });
+      let data;
+      try {
+        data = await attempt();
+      } catch {
+        // Retry once on failure
+        data = await attempt();
+      }
 
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error("Request timeout")), 12000);
-      });
-
-      const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
-      if (error) throw error;
-      if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
       if (data?.alreadyRegistered) {
         toast({ title: "Ci sei già! 🎉", description: "Questa email è già in lista. Ti avviseremo appena si apre lo shop!" });
         setSubmitting(false);
@@ -56,7 +72,7 @@ const Index = () => {
       setSuccess(true);
     } catch (err) {
       console.error("Brevo error:", err);
-      toast({ variant: "destructive", title: "Errore", description: "Invio troppo lento o non riuscito. Riprova." });
+      toast({ variant: "destructive", title: "Errore", description: "Qualcosa è andato storto. Riprova tra qualche secondo." });
       setSubmitting(false);
     }
   };
