@@ -36,43 +36,48 @@ serve(async (req) => {
       );
     }
 
-    // Add contact to Brevo
-    const brevoRes = await fetch("https://api.brevo.com/v3/contacts", {
+    // Fire-and-forget: send to Brevo in background, respond immediately
+    const brevoPayload = JSON.stringify({
+      email: email.trim(),
+      attributes: {
+        FIRSTNAME: nome.trim(),
+        LASTNAME: cognome.trim(),
+        NOME: `${nome.trim()} ${cognome.trim()}`,
+        SMS: (() => {
+          let phone = telefono.replace(/[\s\-().]/g, "");
+          if (!phone.startsWith("+")) {
+            phone = phone.startsWith("00") ? "+" + phone.slice(2) : "+39" + phone;
+          }
+          return phone;
+        })(),
+      },
+      listIds: [2],
+      updateEnabled: true,
+    });
+
+    // Don't await — let it run in background
+    fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
         "api-key": BREVO_API_KEY,
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({
-        email: email.trim(),
-        attributes: {
-          FIRSTNAME: nome.trim(),
-          LASTNAME: cognome.trim(),
-          NOME: `${nome.trim()} ${cognome.trim()}`,
-          SMS: (() => {
-            let phone = telefono.replace(/[\s\-().]/g, "");
-            if (!phone.startsWith("+")) {
-              phone = phone.startsWith("00") ? "+" + phone.slice(2) : "+39" + phone;
-            }
-            return phone;
-          })(),
-        },
-        listIds: [2], // Default list, user can change
-        updateEnabled: true,
-      }),
-    });
-
-    if (!brevoRes.ok) {
-      const errBody = await brevoRes.text();
-      console.error("Brevo API error:", brevoRes.status, errBody);
-      // Treat duplicate contact/SMS as success
-      if (brevoRes.status === 400 && errBody.includes("duplicate_parameter")) {
-        console.log("Contact already exists, treating as success");
+      body: brevoPayload,
+    }).then(async (res) => {
+      if (!res.ok) {
+        const errBody = await res.text();
+        if (res.status === 400 && errBody.includes("duplicate_parameter")) {
+          console.log("Contact already exists, treating as success");
+        } else {
+          console.error("Brevo API error:", res.status, errBody);
+        }
       } else {
-        throw new Error(`Brevo API error [${brevoRes.status}]: ${errBody}`);
+        console.log("Contact added to Brevo successfully");
       }
-    }
+    }).catch((err) => {
+      console.error("Brevo fetch error:", err);
+    });
 
     return new Response(
       JSON.stringify({ success: true }),
