@@ -23,6 +23,8 @@ const Index = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
     const newErrors = {
       nome: !formData.nome.trim(),
       cognome: !formData.cognome.trim(),
@@ -35,15 +37,21 @@ const Index = () => {
 
     setSubmitting(true);
     try {
-      const { data, error } = await supabase.functions.invoke("add-to-brevo", {
+      const invokePromise = supabase.functions.invoke("add-to-brevo", {
         body: { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() },
       });
+
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error("Request timeout")), 12000);
+      });
+
+      const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
       if (error) throw error;
       if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
       setSuccess(true);
     } catch (err) {
       console.error("Brevo error:", err);
-      toast({ variant: "destructive", title: "Errore", description: "Qualcosa è andato storto. Riprova." });
+      toast({ variant: "destructive", title: "Errore", description: "Invio troppo lento o non riuscito. Riprova." });
       setSubmitting(false);
     }
   };
