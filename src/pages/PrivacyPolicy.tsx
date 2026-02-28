@@ -28,7 +28,7 @@ const PrivacyPolicy = () => {
             <h2 className="mb-2 text-sm font-bold uppercase tracking-wide text-foreground">2. Dati raccolti</h2>
             <p>Raccogliamo i seguenti dati personali forniti volontariamente dall'utente tramite il modulo di iscrizione:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>Nome</li>
+              <li>Nome e Cognome</li>
               <li>Indirizzo email</li>
               <li>Numero di telefono</li>
             </ul>
