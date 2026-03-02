@@ -182,7 +182,7 @@ const ProductDetail = () => {
             <p className="text-lg font-extrabold text-primary mb-4">
               {variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}
             </p>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6">{intro}</p>
+            
 
             {/* Variant selector */}
             {product.variants.edges.length > 1 && (
