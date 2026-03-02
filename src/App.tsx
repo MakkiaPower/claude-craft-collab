@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
 import Index from "./pages/Index";
 import CookieBanner from "./components/CookieBanner";
+import Footer from "./components/Footer";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -32,6 +33,7 @@ const AppRoutes = () => {
         <Route path="/product/:handle" element={<Suspense fallback={<LoadingFallback />}><ProductDetail /></Suspense>} />
         <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
       </Routes>
+      <Footer />
       <CookieBanner />
     </>
   );
