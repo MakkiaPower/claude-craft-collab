@@ -61,22 +61,35 @@ function parseDescription(raw: string) {
 }
 
 /** Render section content, turning bullet lines into a list */
-function SectionContent({ content }: { content: string }) {
-  const lines = content.split("•").map(l => l.trim()).filter(Boolean);
+function SectionContent({ content, sectionTitle }: { content: string; sectionTitle: string }) {
   const hasBullets = content.includes("•");
 
   if (!hasBullets) {
     return <p className="text-sm text-muted-foreground leading-relaxed">{content}</p>;
   }
 
-  // First part before bullets
+  // Split on bullet, skip empty and lines that duplicate the section title
+  const parts = content.split("•").map(l => l.trim()).filter(Boolean);
   const textBefore = content.substring(0, content.indexOf("•")).trim();
+  const bullets = parts.filter(line => {
+    // Remove lines that are just the section title or very similar
+    const normalized = line.toLowerCase().replace(/[^a-zàèéìòù\s]/g, "").trim();
+    const normalizedTitle = sectionTitle.toLowerCase().replace(/[^a-zàèéìòù\s]/g, "").trim();
+    if (normalized === normalizedTitle) return false;
+    // Also skip if it's the textBefore repeated
+    if (textBefore && line === textBefore) return false;
+    return true;
+  });
+
+  // Check if textBefore duplicates the title
+  const showTextBefore = textBefore && 
+    textBefore.toLowerCase().replace(/[^a-zàèéìòù\s]/g, "").trim() !== sectionTitle.toLowerCase().replace(/[^a-zàèéìòù\s]/g, "").trim();
 
   return (
     <div>
-      {textBefore && <p className="text-sm text-muted-foreground leading-relaxed mb-3">{textBefore}</p>}
+      {showTextBefore && <p className="text-sm text-muted-foreground leading-relaxed mb-3">{textBefore}</p>}
       <ul className="space-y-2">
-        {lines.map((line, i) => (
+        {bullets.map((line, i) => (
           <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
             <span className="text-primary mt-0.5 flex-shrink-0">•</span>
             <span>{line}</span>
@@ -227,7 +240,7 @@ const ProductDetail = () => {
                   <span>{section.emoji}</span>
                   {section.title}
                 </h3>
-                <SectionContent content={section.content} />
+                <SectionContent content={section.content} sectionTitle={section.title} />
               </div>
             ))}
           </div>
