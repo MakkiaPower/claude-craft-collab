@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CookieBanner from "./components/CookieBanner";
 
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const Shop = lazy(() => import("./pages/Shop"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/privacy" element={<Suspense fallback={<div className="flex min-h-dvh items-center justify-center"><p className="text-muted-foreground text-sm">Caricamento...</p></div>}><PrivacyPolicy /></Suspense>} />
+          <Route path="/shop" element={<Suspense fallback={<div className="flex min-h-dvh items-center justify-center"><p className="text-muted-foreground text-sm">Caricamento...</p></div>}><Shop /></Suspense>} />
           <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
         </Routes>
         <CookieBanner />
