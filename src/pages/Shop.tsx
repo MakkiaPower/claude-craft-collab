@@ -40,29 +40,39 @@ const Shop = () => {
     return (
       <div className="flex min-h-dvh items-center justify-center px-5 py-10">
         <main className="w-full max-w-[380px] flex flex-col items-center text-center">
-          <div className="mb-8 animate-enter-up" style={{ animationDelay: "0.1s" }}>
-            <img src={logo} alt="AstroBastardo" className="h-[100px] w-[100px] object-contain" width={100} height={100} />
+          <div className="mb-6 sm:mb-8 animate-enter-up" style={{ animationDelay: "0.05s" }}>
+            <img
+              src={logo}
+              alt="AstroBastardo"
+              className="h-20 w-20 sm:h-[100px] sm:w-[100px] object-contain drop-shadow-[0_0_20px_hsl(var(--primary)/0.25)]"
+              width={100}
+              height={100}
+            />
           </div>
-          <h1 className="mb-3 text-xl font-extrabold uppercase tracking-tight animate-enter-up" style={{ animationDelay: "0.2s" }}>
+          <h1 className="mb-2 sm:mb-3 text-lg sm:text-xl font-extrabold uppercase tracking-tight animate-enter-up" style={{ animationDelay: "0.12s" }}>
             Area Riservata
           </h1>
-          <p className="mb-8 text-sm text-muted-foreground animate-enter-up" style={{ animationDelay: "0.3s" }}>
+          <p className="mb-6 sm:mb-8 text-[0.8rem] sm:text-sm text-muted-foreground leading-relaxed animate-enter-up" style={{ animationDelay: "0.2s" }}>
             Inserisci il codice che hai ricevuto per accedere allo shop.
           </p>
-          <form onSubmit={handleUnlock} className="w-full animate-enter-up" style={{ animationDelay: "0.4s" }}>
+          <form onSubmit={handleUnlock} className="w-full animate-enter-up" style={{ animationDelay: "0.28s" }}>
             <input
               type="password"
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(""); }}
               placeholder="Codice di accesso"
               autoFocus
-              className="w-full rounded bg-foreground/5 border border-input px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+              className="w-full rounded bg-foreground/5 border border-input px-4 py-4 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 transition-all duration-300"
             />
-            {error && <p className="mt-2 text-[0.78rem] font-medium text-destructive" role="alert">{error}</p>}
+            {error && (
+              <p className="mt-2 text-[0.78rem] font-medium text-destructive animate-fade-in" role="alert">
+                {error}
+              </p>
+            )}
             <button
               type="submit"
               disabled={loading || !password.trim()}
-              className="mt-4 w-full rounded bg-primary px-4 py-[16px] text-[0.82rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all duration-200 hover:brightness-90 active:brightness-75 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="mt-4 w-full rounded bg-primary px-4 py-4 text-[0.82rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all duration-300 hover:brightness-90 hover:shadow-[0_4px_20px_hsl(var(--primary)/0.3)] active:scale-[0.97] active:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:shadow-none"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -72,12 +82,14 @@ const Shop = () => {
               ) : "ENTRA"}
             </button>
           </form>
-          <p className="mt-8 text-[0.78rem] text-muted-foreground animate-enter-up" style={{ animationDelay: "0.5s" }}>
-            Non hai la password?
-          </p>
-          <Link to="/" className="mt-2 text-[0.78rem] font-bold text-primary underline underline-offset-4 hover:brightness-90 transition-all animate-enter-up" style={{ animationDelay: "0.55s" }}>
-            Entra in lista qui
-          </Link>
+          <div className="mt-8 sm:mt-10 animate-enter-up" style={{ animationDelay: "0.38s" }}>
+            <p className="text-[0.78rem] text-muted-foreground">
+              Non hai la password?
+            </p>
+            <Link to="/" className="mt-2 inline-block text-[0.78rem] font-bold text-primary underline underline-offset-4 hover:brightness-90 active:scale-95 transition-all duration-200">
+              Entra in lista qui
+            </Link>
+          </div>
         </main>
       </div>
     );
