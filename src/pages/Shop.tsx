@@ -4,8 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { storefrontApiRequest, STOREFRONT_PRODUCTS_QUERY, ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { CartDrawer } from "@/components/CartDrawer";
-import { Loader2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { Loader2, ArrowRight } from "lucide-react";
 import logo from "@/assets/astrobastardo-logo.png";
 
 const Shop = () => {
@@ -90,8 +89,6 @@ const Shop = () => {
 const ShopContent = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const addItem = useCartStore(state => state.addItem);
-  const isCartLoading = useCartStore(state => state.isLoading);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -107,40 +104,25 @@ const ShopContent = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (product: ShopifyProduct) => {
-    const variant = product.node.variants.edges[0]?.node;
-    if (!variant || !variant.availableForSale) return;
-    await addItem({
-      product,
-      variantId: variant.id,
-      variantTitle: variant.title,
-      price: variant.price,
-      quantity: 1,
-      selectedOptions: variant.selectedOptions || [],
-    });
-    toast({ title: "Aggiunto al carrello! 🛒", description: product.node.title });
-  };
-
   return (
-    <div className="flex min-h-dvh flex-col px-5 py-8">
-      <header className="mx-auto w-full max-w-5xl flex items-center justify-between mb-10">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="AstroBastardo" className="h-9 w-9 object-contain" width={36} height={36} />
-          <span className="text-xs font-extrabold uppercase tracking-[2px] text-foreground hidden sm:inline">AstroBastardo</span>
+    <div className="flex min-h-dvh flex-col px-5 py-6 sm:py-8">
+      {/* Header */}
+      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-8 sm:mb-12">
+        <Link to="/" className="flex items-center gap-2.5">
+          <img src={logo} alt="AstroBastardo" className="h-8 w-8 object-contain" width={32} height={32} />
+          <span className="text-[0.65rem] font-extrabold uppercase tracking-[2px] text-foreground hidden sm:inline">AstroBastardo</span>
         </Link>
-        <div className="flex items-center gap-3">
-          <span className="text-[0.7rem] font-bold uppercase tracking-[2px] text-muted-foreground">Shop</span>
-          <CartDrawer />
-        </div>
+        <CartDrawer />
       </header>
 
-      <main className="mx-auto w-full max-w-5xl flex-1">
-        <div className="mb-10">
-          <h1 className="text-2xl font-extrabold uppercase tracking-tight mb-2">
-            Lo Shop di <span className="text-primary">AstroBastardo</span>
+      <main className="mx-auto w-full max-w-4xl flex-1">
+        {/* Hero */}
+        <div className="mb-10 sm:mb-14 text-center">
+          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight mb-3">
+            Le tue stelle, <span className="text-primary">senza filtri.</span>
           </h1>
-          <p className="text-sm text-muted-foreground">
-            Pezzi limitati. Quando finiscono, finiscono.
+          <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+            Analisi astrologiche personalizzate. Niente oroscopi da bar — solo la verità scritta nelle stelle.
           </p>
         </div>
 
@@ -154,52 +136,82 @@ const ShopContent = () => {
             <p className="text-muted-foreground/60 text-xs">Torna presto — stiamo preparando qualcosa di grosso.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="space-y-5 sm:space-y-6">
             {products.map((product) => {
               const image = product.node.images.edges[0]?.node;
               const price = product.node.priceRange.minVariantPrice;
-              const variant = product.node.variants.edges[0]?.node;
-              const available = variant?.availableForSale ?? false;
 
               return (
-                <div key={product.node.id} className="rounded-lg border border-input bg-foreground/[0.02] overflow-hidden group">
-                  <Link to={`/product/${product.node.handle}`} className="block">
-                    <div className="w-full aspect-square bg-foreground/[0.04] overflow-hidden">
-                      {image ? (
-                        <img src={image.url} alt={image.altText || product.node.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-muted-foreground/40 text-xs uppercase tracking-widest">No image</span>
-                        </div>
-                      )}
+                <Link
+                  key={product.node.id}
+                  to={`/product/${product.node.handle}`}
+                  className="group flex flex-col sm:flex-row rounded-xl border border-input bg-foreground/[0.02] overflow-hidden hover:border-primary/30 transition-all duration-300"
+                >
+                  {/* Image */}
+                  <div className="w-full sm:w-56 md:w-64 aspect-[4/3] sm:aspect-square bg-foreground/[0.04] overflow-hidden flex-shrink-0">
+                    {image ? (
+                      <img
+                        src={image.url}
+                        alt={image.altText || product.node.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-muted-foreground/40 text-xs uppercase tracking-widest">No image</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-base sm:text-lg font-extrabold uppercase tracking-wide text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {product.node.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                        {getShortDescription(product.node.description)}
+                      </p>
                     </div>
-                  </Link>
-                  <div className="p-4">
-                    <Link to={`/product/${product.node.handle}`}>
-                      <h3 className="text-sm font-bold uppercase tracking-wide mb-1 text-foreground hover:text-primary transition-colors">{product.node.title}</h3>
-                    </Link>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{product.node.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-extrabold text-primary">
-                        {price.currencyCode} {parseFloat(price.amount).toFixed(2)}
+                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-input/60">
+                      <span className="text-lg font-extrabold text-primary">
+                        €{parseFloat(price.amount).toFixed(2)}
                       </span>
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        disabled={!available || isCartLoading}
-                        className="rounded bg-primary px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-wider text-primary-foreground hover:brightness-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {available ? "Aggiungi" : "Esaurito"}
-                      </button>
+                      <span className="flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
+                        Scopri di più
+                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="mx-auto w-full max-w-4xl mt-16 pt-6 border-t border-input/40 text-center">
+        <p className="text-[0.65rem] text-muted-foreground/50 uppercase tracking-widest">
+          AstroBastardo © {new Date().getFullYear()}
+        </p>
+      </footer>
     </div>
   );
 };
+
+/** Extract a clean short description from the raw Shopify text */
+function getShortDescription(raw: string): string {
+  // Take text before the first emoji section marker
+  const markers = ["📌", "🔭", "📋", "🎯", "📦"];
+  let end = raw.length;
+  for (const m of markers) {
+    const idx = raw.indexOf(m);
+    if (idx !== -1 && idx < end) end = idx;
+  }
+  const intro = raw.substring(0, end).trim();
+  // Cap at ~120 chars
+  if (intro.length > 140) return intro.substring(0, 137).trimEnd() + "…";
+  return intro || raw.substring(0, 137).trimEnd() + "…";
+}
 
 export default Shop;
