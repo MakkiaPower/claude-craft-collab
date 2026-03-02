@@ -18,6 +18,75 @@ interface ProductNode {
   options: Array<{ name: string; values: string[] }>;
 }
 
+/** Parse Shopify plain-text description into titled sections */
+function parseDescription(raw: string) {
+  const sectionHeaders = [
+    { emoji: "📌", title: "Cosa ottieni" },
+    { emoji: "🔭", title: "Come viene calcolato" },
+    { emoji: "🔭", title: "Come viene calcolata" },
+    { emoji: "📋", title: "Dati necessari" },
+    { emoji: "🎯", title: "A chi è adatto" },
+    { emoji: "🎯", title: "A chi è adatta" },
+    { emoji: "📦", title: "Formato e consegna" },
+  ];
+
+  // Split by emoji markers
+  const sections: Array<{ title: string; emoji: string; content: string }> = [];
+  let intro = raw;
+
+  for (const header of sectionHeaders) {
+    const marker = `${header.emoji} ${header.title}`;
+    const idx = raw.indexOf(marker);
+    if (idx !== -1) {
+      if (sections.length === 0) {
+        intro = raw.substring(0, idx).trim();
+      }
+    }
+  }
+
+  // Build sections by splitting on emoji markers
+  const allMarkers = sectionHeaders
+    .map(h => ({ ...h, marker: `${h.emoji} ${h.title}`, idx: raw.indexOf(`${h.emoji} ${h.title}`) }))
+    .filter(h => h.idx !== -1)
+    .sort((a, b) => a.idx - b.idx);
+
+  for (let i = 0; i < allMarkers.length; i++) {
+    const start = allMarkers[i].idx + allMarkers[i].marker.length;
+    const end = i + 1 < allMarkers.length ? allMarkers[i + 1].idx : raw.length;
+    const content = raw.substring(start, end).trim();
+    sections.push({ title: allMarkers[i].title, emoji: allMarkers[i].emoji, content });
+  }
+
+  return { intro, sections };
+}
+
+/** Render section content, turning bullet lines into a list */
+function SectionContent({ content }: { content: string }) {
+  const lines = content.split("•").map(l => l.trim()).filter(Boolean);
+  const hasBullets = content.includes("•");
+
+  if (!hasBullets) {
+    return <p className="text-sm text-muted-foreground leading-relaxed">{content}</p>;
+  }
+
+  // First part before bullets
+  const textBefore = content.substring(0, content.indexOf("•")).trim();
+
+  return (
+    <div>
+      {textBefore && <p className="text-sm text-muted-foreground leading-relaxed mb-3">{textBefore}</p>}
+      <ul className="space-y-2">
+        {lines.map((line, i) => (
+          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+            <span className="text-primary mt-0.5 flex-shrink-0">•</span>
+            <span>{line}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const [product, setProduct] = useState<ProductNode | null>(null);
@@ -60,6 +129,7 @@ const ProductDetail = () => {
 
   const variant = product.variants.edges[selectedVariantIdx]?.node;
   const images = product.images.edges;
+  const { intro, sections } = parseDescription(product.description);
 
   const handleAddToCart = async () => {
     if (!variant?.availableForSale) return;
@@ -112,7 +182,7 @@ const ProductDetail = () => {
             <p className="text-lg font-extrabold text-primary mb-4">
               {variant?.price.currencyCode} {parseFloat(variant?.price.amount || "0").toFixed(2)}
             </p>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6">{product.description}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-6">{intro}</p>
 
             {/* Variant selector */}
             {product.variants.edges.length > 1 && (
@@ -147,6 +217,21 @@ const ProductDetail = () => {
             </button>
           </div>
         </div>
+
+        {/* Structured description sections */}
+        {sections.length > 0 && (
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {sections.map((section, i) => (
+              <div key={i} className="rounded-lg border border-input bg-foreground/[0.02] p-6">
+                <h3 className="text-sm font-extrabold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
+                  <span>{section.emoji}</span>
+                  {section.title}
+                </h3>
+                <SectionContent content={section.content} />
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
