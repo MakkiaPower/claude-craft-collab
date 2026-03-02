@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/astrobastardo-logo.png";
 
@@ -106,7 +107,18 @@ const Shop = () => {
                 "ENTRA"
               )}
             </button>
-          </form>
+           </form>
+
+          <p className="mt-8 text-[0.78rem] text-muted-foreground animate-enter-up" style={{ animationDelay: "0.5s" }}>
+            Non hai la password?
+          </p>
+          <Link
+            to="/"
+            className="mt-2 text-[0.78rem] font-bold text-primary underline underline-offset-4 hover:brightness-90 transition-all animate-enter-up"
+            style={{ animationDelay: "0.55s" }}
+          >
+            Entra in lista qui
+          </Link>
         </main>
       </div>
     );
