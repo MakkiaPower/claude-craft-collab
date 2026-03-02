@@ -5,6 +5,7 @@ export interface PersonBirthData {
   cognome: string;
   dataNascita: string;
   oraNascita: string;
+  oraNascitaSconosciuta: boolean;
   luogoNascita: string;
 }
 
@@ -13,6 +14,7 @@ const emptyPerson = (): PersonBirthData => ({
   cognome: "",
   dataNascita: "",
   oraNascita: "",
+  oraNascitaSconosciuta: false,
   luogoNascita: "",
 });
 
@@ -29,6 +31,7 @@ const Field = ({
   value,
   onChange,
   error,
+  disabled,
 }: {
   label: string;
   type?: string;
@@ -36,6 +39,7 @@ const Field = ({
   value: string;
   onChange: (v: string) => void;
   error?: boolean;
+  disabled?: boolean;
 }) => (
   <div>
     <label className="block text-[0.65rem] font-semibold uppercase tracking-[1px] text-muted-foreground mb-1">
@@ -46,9 +50,10 @@ const Field = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      disabled={disabled}
       className={`w-full rounded border px-3 py-3 sm:py-2.5 text-[16px] sm:text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/40 outline-none transition-colors ${
-        error ? "border-destructive" : "border-input focus:border-primary"
-      }`}
+        disabled ? "opacity-40 cursor-not-allowed" : ""
+      } ${error ? "border-destructive" : "border-input focus:border-primary"}`}
     />
   </div>
 );
@@ -74,7 +79,26 @@ const PersonFields = ({
     </div>
     <div className="grid grid-cols-2 gap-2">
       <Field label="Data di nascita" type="date" placeholder="" value={data.dataNascita} onChange={(v) => onChange({ ...data, dataNascita: v })} error={errors.dataNascita} />
-      <Field label="Ora di nascita" type="time" placeholder="" value={data.oraNascita} onChange={(v) => onChange({ ...data, oraNascita: v })} error={errors.oraNascita} />
+      <div>
+        <Field
+          label="Ora di nascita"
+          type="time"
+          placeholder=""
+          value={data.oraNascitaSconosciuta ? "" : data.oraNascita}
+          onChange={(v) => onChange({ ...data, oraNascita: v })}
+          error={errors.oraNascita}
+          disabled={data.oraNascitaSconosciuta}
+        />
+        <label className="mt-1.5 flex items-center gap-1.5 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={data.oraNascitaSconosciuta}
+            onChange={(e) => onChange({ ...data, oraNascitaSconosciuta: e.target.checked, oraNascita: "" })}
+            className="h-3.5 w-3.5 rounded border-input accent-primary"
+          />
+          <span className="text-[0.62rem] text-muted-foreground">Non la so</span>
+        </label>
+      </div>
     </div>
     <Field label="Luogo di nascita" placeholder="Roma, Italia" value={data.luogoNascita} onChange={(v) => onChange({ ...data, luogoNascita: v })} error={errors.luogoNascita} />
   </div>
@@ -85,7 +109,7 @@ function validatePerson(p: PersonBirthData): Record<string, boolean> {
     nome: !p.nome.trim(),
     cognome: !p.cognome.trim(),
     dataNascita: !p.dataNascita,
-    oraNascita: !p.oraNascita,
+    oraNascita: !p.oraNascita && !p.oraNascitaSconosciuta,
     luogoNascita: !p.luogoNascita.trim(),
   };
 }
@@ -95,7 +119,7 @@ function formatPersonNote(p: PersonBirthData, label?: string): string {
   if (label) lines.push(`--- ${label} ---`);
   lines.push(`Nome: ${p.nome.trim()} ${p.cognome.trim()}`);
   lines.push(`Data di nascita: ${p.dataNascita}`);
-  lines.push(`Ora di nascita: ${p.oraNascita}`);
+  lines.push(`Ora di nascita: ${p.oraNascitaSconosciuta ? "Non conosciuta" : p.oraNascita}`);
   lines.push(`Luogo di nascita: ${p.luogoNascita.trim()}`);
   return lines.join("\n");
 }
