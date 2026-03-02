@@ -1,13 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import BirthDataForm from "@/components/BirthDataForm";
+
+function detectProductType(items: { product: { node: { title: string; handle: string } } }[]): "tema-natale" | "affinita" | null {
+  for (const item of items) {
+    const t = (item.product.node.title + " " + item.product.node.handle).toLowerCase();
+    if (t.includes("affinit")) return "affinita";
+    if (t.includes("tema") || t.includes("natale")) return "tema-natale";
+  }
+  return null;
+}
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
+  const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart, updateNote, birthDataNote } = useCartStore();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
+
+  const productType = useMemo(() => detectProductType(items), [items]);
+  const needsBirthData = productType !== null;
+  const hasBirthData = !!birthDataNote;
 
   useEffect(() => { if (isOpen) syncCart(); }, [isOpen, syncCart]);
 
@@ -16,6 +30,13 @@ export const CartDrawer = () => {
     if (checkoutUrl) {
       window.open(checkoutUrl, '_blank');
       setIsOpen(false);
+    }
+  };
+
+  const handleBirthDataComplete = async (note: string) => {
+    const success = await updateNote(note);
+    if (success) {
+      handleCheckout();
     }
   };
 
@@ -79,19 +100,36 @@ export const CartDrawer = () => {
                     </div>
                   ))}
                 </div>
+
+                {/* Birth data form */}
+                {needsBirthData && !hasBirthData && (
+                  <BirthDataForm
+                    type={productType}
+                    onComplete={handleBirthDataComplete}
+                    isLoading={isLoading}
+                  />
+                )}
               </div>
+
               <div className="flex-shrink-0 space-y-4 pt-4 border-t border-input">
                 <div className="flex justify-between items-center">
                   <span className="font-bold text-foreground">Totale</span>
                   <span className="text-lg font-extrabold text-primary">{items[0]?.price.currencyCode} {totalPrice.toFixed(2)}</span>
                 </div>
-                <button
-                  onClick={handleCheckout}
-                  disabled={items.length === 0 || isLoading || isSyncing}
-                  className="w-full rounded bg-primary px-4 py-3.5 text-[0.82rem] font-extrabold uppercase tracking-[2px] text-primary-foreground transition-all hover:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><ExternalLink className="w-4 h-4" />Vai al Checkout</>}
-                </button>
+
+                {needsBirthData && !hasBirthData ? (
+                  <p className="text-[0.7rem] text-muted-foreground text-center">
+                    ⬆️ Compila i dati di nascita per procedere al checkout
+                  </p>
+                ) : (
+                  <button
+                    onClick={handleCheckout}
+                    disabled={items.length === 0 || isLoading || isSyncing}
+                    className="w-full rounded bg-primary px-4 py-3.5 text-[0.82rem] font-extrabold uppercase tracking-[2px] text-primary-foreground transition-all hover:brightness-90 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><ExternalLink className="w-4 h-4" />Vai al Checkout</>}
+                  </button>
+                )}
               </div>
             </>
           )}

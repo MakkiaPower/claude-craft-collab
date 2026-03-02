@@ -51,6 +51,15 @@ const CART_LINES_REMOVE_MUTATION = `
   }
 `;
 
+const CART_NOTE_UPDATE_MUTATION = `
+  mutation cartNoteUpdate($cartId: ID!, $note: String!) {
+    cartNoteUpdate(cartId: $cartId, note: $note) {
+      cart { id note }
+      userErrors { field message }
+    }
+  }
+`;
+
 function formatCheckoutUrl(checkoutUrl: string): string {
   try {
     const url = new URL(checkoutUrl);
@@ -119,12 +128,14 @@ interface CartStore {
   checkoutUrl: string | null;
   isLoading: boolean;
   isSyncing: boolean;
+  birthDataNote: string | null;
   addItem: (item: Omit<CartItem, 'lineId'>) => Promise<void>;
   updateQuantity: (variantId: string, quantity: number) => Promise<void>;
   removeItem: (variantId: string) => Promise<void>;
   clearCart: () => void;
   syncCart: () => Promise<void>;
   getCheckoutUrl: () => string | null;
+  updateNote: (note: string) => Promise<boolean>;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -135,6 +146,7 @@ export const useCartStore = create<CartStore>()(
       checkoutUrl: null,
       isLoading: false,
       isSyncing: false,
+      birthDataNote: null,
 
       addItem: async (item) => {
         const { items, cartId, clearCart } = get();
@@ -195,8 +207,29 @@ export const useCartStore = create<CartStore>()(
         finally { set({ isLoading: false }); }
       },
 
-      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null }),
+      clearCart: () => set({ items: [], cartId: null, checkoutUrl: null, birthDataNote: null }),
       getCheckoutUrl: () => get().checkoutUrl,
+
+      updateNote: async (note: string) => {
+        const { cartId } = get();
+        if (!cartId) return false;
+        set({ isLoading: true });
+        try {
+          const data = await storefrontApiRequest(CART_NOTE_UPDATE_MUTATION, { cartId, note });
+          const userErrors = data?.data?.cartNoteUpdate?.userErrors || [];
+          if (userErrors.length > 0) {
+            console.error('Note update failed:', userErrors);
+            return false;
+          }
+          set({ birthDataNote: note });
+          return true;
+        } catch (error) {
+          console.error('Failed to update note:', error);
+          return false;
+        } finally {
+          set({ isLoading: false });
+        }
+      },
 
       syncCart: async () => {
         const { cartId, isSyncing, clearCart } = get();
@@ -214,7 +247,7 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'shopify-cart',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl }),
+      partialize: (state) => ({ items: state.items, cartId: state.cartId, checkoutUrl: state.checkoutUrl, birthDataNote: state.birthDataNote }),
     }
   )
 );
