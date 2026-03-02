@@ -105,10 +105,10 @@ const ShopContent = () => {
   }, []);
 
   return (
-    <div className="flex min-h-dvh flex-col px-5 py-6 sm:py-8">
+    <div className="flex min-h-dvh flex-col px-4 sm:px-5 py-4 sm:py-8">
       {/* Header */}
-      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-8 sm:mb-12">
-        <Link to="/" className="flex items-center gap-2.5">
+      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-6 sm:mb-12">
+        <Link to="/" className="flex items-center gap-2.5 active:scale-95 transition-transform">
           <img src={logo} alt="AstroBastardo" className="h-8 w-8 object-contain" width={32} height={32} />
           <span className="text-[0.65rem] font-extrabold uppercase tracking-[2px] text-foreground hidden sm:inline">AstroBastardo</span>
         </Link>
@@ -117,11 +117,11 @@ const ShopContent = () => {
 
       <main className="mx-auto w-full max-w-4xl flex-1">
         {/* Hero */}
-        <div className="mb-10 sm:mb-14 text-center">
-          <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight mb-3">
+        <div className="mb-8 sm:mb-14 text-center">
+          <h1 className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight mb-2 sm:mb-3">
             Le tue stelle, <span className="text-primary">senza filtri.</span>
           </h1>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+          <p className="text-[0.8rem] sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
             Analisi astrologiche personalizzate. Niente oroscopi da bar — solo la verità scritta nelle stelle.
           </p>
         </div>
@@ -136,7 +136,7 @@ const ShopContent = () => {
             <p className="text-muted-foreground/60 text-xs">Torna presto — stiamo preparando qualcosa di grosso.</p>
           </div>
         ) : (
-          <div className="space-y-5 sm:space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {products.map((product) => {
               const image = product.node.images.edges[0]?.node;
               const price = product.node.priceRange.minVariantPrice;
@@ -145,10 +145,10 @@ const ShopContent = () => {
                 <Link
                   key={product.node.id}
                   to={`/product/${product.node.handle}`}
-                  className="group flex flex-col sm:flex-row rounded-xl border border-input bg-foreground/[0.02] overflow-hidden hover:border-primary/30 transition-all duration-300"
+                  className="group flex flex-col sm:flex-row rounded-xl border border-input bg-foreground/[0.02] overflow-hidden hover:border-primary/30 active:scale-[0.98] transition-all duration-300"
                 >
                   {/* Image */}
-                  <div className="w-full sm:w-56 md:w-64 aspect-[4/3] sm:aspect-square bg-foreground/[0.04] overflow-hidden flex-shrink-0">
+                  <div className="w-full sm:w-56 md:w-64 aspect-[3/2] sm:aspect-square bg-foreground/[0.04] overflow-hidden flex-shrink-0">
                     {image ? (
                       <img
                         src={image.url}
@@ -163,17 +163,17 @@ const ShopContent = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
+                  <div className="flex-1 p-4 sm:p-6 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-base sm:text-lg font-extrabold uppercase tracking-wide text-foreground mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="text-[0.95rem] sm:text-lg font-extrabold uppercase tracking-wide text-foreground mb-1.5 sm:mb-2 group-hover:text-primary transition-colors">
                         {product.node.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2 sm:line-clamp-3">
                         {getShortDescription(product.node.description)}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-input/60">
-                      <span className="text-lg font-extrabold text-primary">
+                    <div className="flex items-center justify-between mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-input/60">
+                      <span className="text-base sm:text-lg font-extrabold text-primary">
                         €{parseFloat(price.amount).toFixed(2)}
                       </span>
                       <span className="flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
@@ -190,7 +190,7 @@ const ShopContent = () => {
       </main>
 
       {/* Footer */}
-      <footer className="mx-auto w-full max-w-4xl mt-16 pt-6 border-t border-input/40 text-center">
+      <footer className="mx-auto w-full max-w-4xl mt-10 sm:mt-16 pt-5 sm:pt-6 border-t border-input/40 text-center pb-4">
         <p className="text-[0.65rem] text-muted-foreground/50 uppercase tracking-widest">
           AstroBastardo © {new Date().getFullYear()}
         </p>

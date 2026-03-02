@@ -139,10 +139,10 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col px-5 py-6 sm:py-8">
+    <div className="flex min-h-dvh flex-col px-4 sm:px-5 py-4 sm:py-8">
       {/* Header */}
-      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-6 sm:mb-10">
-        <Link to="/shop" className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
+      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-4 sm:mb-10">
+        <Link to="/shop" className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors active:scale-95">
           <ArrowLeft className="h-4 w-4" />
           <img src={logo} alt="AstroBastardo" className="h-7 w-7 object-contain" width={28} height={28} />
         </Link>
@@ -150,10 +150,10 @@ const ProductDetail = () => {
       </header>
 
       <main className="mx-auto w-full max-w-4xl flex-1">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-10">
           {/* Image */}
           <div>
-            <div className="aspect-square rounded-xl overflow-hidden bg-foreground/[0.04]">
+            <div className="aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden bg-foreground/[0.04]">
               {images[selectedImage] ? (
                 <img src={images[selectedImage].node.url} alt={images[selectedImage].node.altText || product.title} className="w-full h-full object-cover" />
               ) : (
@@ -161,9 +161,9 @@ const ProductDetail = () => {
               )}
             </div>
             {images.length > 1 && (
-              <div className="flex gap-2 mt-3 overflow-x-auto">
+              <div className="flex gap-2 mt-2.5 overflow-x-auto pb-1 -mx-1 px-1">
                 {images.map((img, i) => (
-                  <button key={i} onClick={() => setSelectedImage(i)} className={`w-14 h-14 rounded-lg border overflow-hidden flex-shrink-0 transition-all ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
+                  <button key={i} onClick={() => setSelectedImage(i)} className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg border overflow-hidden flex-shrink-0 transition-all ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
                     <img src={img.node.url} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -173,21 +173,21 @@ const ProductDetail = () => {
 
           {/* Info + CTA */}
           <div className="flex flex-col">
-            <h1 className="text-xl sm:text-2xl font-extrabold uppercase tracking-tight mb-1">{product.title}</h1>
-            <p className="text-2xl font-extrabold text-primary mb-5">
+            <h1 className="text-lg sm:text-2xl font-extrabold uppercase tracking-tight mb-1">{product.title}</h1>
+            <p className="text-xl sm:text-2xl font-extrabold text-primary mb-4 sm:mb-5">
               €{parseFloat(variant?.price.amount || "0").toFixed(2)}
             </p>
 
             {/* Variant selector */}
             {product.variants.edges.length > 1 && (
-              <div className="mb-5">
+              <div className="mb-4 sm:mb-5">
                 <p className="text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground mb-2">Variante</p>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.edges.map((v, i) => (
                     <button
                       key={v.node.id}
                       onClick={() => setSelectedVariantIdx(i)}
-                      className={`px-3 py-1.5 rounded-lg border text-xs font-bold uppercase tracking-wider transition-all ${
+                      className={`px-3 py-2 sm:py-1.5 rounded-lg border text-xs font-bold uppercase tracking-wider transition-all ${
                         i === selectedVariantIdx
                           ? 'border-primary bg-primary/10 text-primary'
                           : 'border-input text-muted-foreground hover:border-foreground/30'
@@ -205,14 +205,14 @@ const ProductDetail = () => {
             <button
               onClick={handleAddToCart}
               disabled={!variant?.availableForSale || isCartLoading}
-              className="w-full rounded-lg bg-primary px-4 py-4 text-[0.82rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full rounded-lg bg-primary px-4 py-[18px] sm:py-4 text-[0.82rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all hover:brightness-90 active:brightness-75 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isCartLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {variant?.availableForSale ? "Aggiungi al Carrello" : "Esaurito"}
             </button>
 
             {/* Trust signals */}
-            <div className="flex items-center justify-center gap-4 mt-3 text-muted-foreground/50">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-3 text-muted-foreground/50 flex-wrap">
               <span className="flex items-center gap-1 text-[0.6rem] font-bold uppercase tracking-wider">
                 <ShieldCheck className="h-3 w-3" />
                 Pagamento sicuro
@@ -223,7 +223,7 @@ const ProductDetail = () => {
 
             {/* Quick info from first 2 sections inline */}
             {sections.length > 0 && (
-              <div className="mt-6 pt-6 border-t border-input/50 space-y-5">
+              <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-input/50 space-y-4 sm:space-y-5">
                 {sections.slice(0, 2).map((section, i) => (
                   <div key={i}>
                     <h3 className="text-[0.7rem] font-extrabold uppercase tracking-widest text-foreground mb-2 flex items-center gap-1.5">
@@ -240,10 +240,10 @@ const ProductDetail = () => {
 
         {/* Remaining sections as cards below */}
         {sections.length > 2 && (
-          <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div className="mt-8 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
             {sections.slice(2).map((section, i) => (
-              <div key={i} className="rounded-xl border border-input bg-foreground/[0.02] p-5">
-                <h3 className="text-[0.7rem] font-extrabold uppercase tracking-widest text-foreground mb-3 flex items-center gap-1.5">
+              <div key={i} className="rounded-xl border border-input bg-foreground/[0.02] p-4 sm:p-5">
+                <h3 className="text-[0.7rem] font-extrabold uppercase tracking-widest text-foreground mb-2.5 sm:mb-3 flex items-center gap-1.5">
                   <span>{section.emoji}</span>
                   {section.title}
                 </h3>
