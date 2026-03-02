@@ -46,7 +46,7 @@ const Field = ({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`w-full rounded border px-3 py-2.5 text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/40 outline-none transition-colors ${
+      className={`w-full rounded border px-3 py-3 sm:py-2.5 text-[16px] sm:text-sm font-medium bg-transparent text-foreground placeholder:text-muted-foreground/40 outline-none transition-colors ${
         error ? "border-destructive" : "border-input focus:border-primary"
       }`}
     />
