@@ -228,6 +228,18 @@ const ProductDetail = () => {
               {isCartLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {variant?.availableForSale ? "Aggiungi al Carrello" : "Esaurito"}
             </button>
+
+            {/* Payment methods */}
+            <div className="flex items-center justify-center gap-3 mt-4">
+              <span className="text-[0.65rem] uppercase tracking-widest text-muted-foreground/60 font-bold">Pagamenti sicuri</span>
+              <div className="flex gap-2">
+                {["Visa", "Mastercard", "Amex", "PayPal", "Apple Pay", "Google Pay"].map((method) => (
+                  <span key={method} className="text-[0.6rem] font-bold text-muted-foreground/50 bg-foreground/[0.04] border border-input rounded px-1.5 py-0.5">
+                    {method}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
