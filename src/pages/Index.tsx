@@ -213,14 +213,6 @@ const Index = () => {
           </p>
         </form>
 
-        {/* Shop access */}
-        <Link
-          to="/shop"
-          className="mt-8 w-full rounded border border-input bg-transparent px-4 py-[16px] text-[0.78rem] font-extrabold uppercase tracking-[2.5px] text-foreground text-center transition-all duration-200 hover:bg-foreground/5 active:bg-foreground/10 block animate-enter-up"
-          style={{ animationDelay: "0.6s" }}
-        >
-          HO LA PASSWORD, FAMMI ENTRARE STRONZO
-        </Link>
       </main>
     </div>
   );
