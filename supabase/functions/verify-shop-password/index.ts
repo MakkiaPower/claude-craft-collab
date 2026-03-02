@@ -30,7 +30,8 @@ serve(async (req) => {
       );
     }
 
-    const valid = password.trim() === shopPassword.trim();
+    const validPasswords = shopPassword.split(",").map((p) => p.trim().toLowerCase());
+    const valid = validPasswords.includes(password.trim().toLowerCase());
 
     return new Response(
       JSON.stringify({ success: valid }),
