@@ -80,7 +80,16 @@ const Index = () => {
   if (success) return <SuccessView />;
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-5 py-10">
+    <div className="flex min-h-dvh items-center justify-center px-5 py-10 relative">
+      {/* Sticker button */}
+      <Link
+        to="/shop"
+        className="fixed top-4 right-4 z-50 animate-enter-up bg-primary text-primary-foreground px-4 py-2.5 rounded-full text-[0.7rem] font-extrabold uppercase tracking-[1.5px] shadow-lg hover:scale-105 active:scale-95 transition-transform duration-200 rotate-[-2deg] hover:rotate-0"
+        style={{ animationDelay: "0.6s" }}
+      >
+        🔮 Scopri i nostri servizi!
+      </Link>
+
       <main className="w-full max-w-[440px] flex flex-col items-center text-center">
         {/* Logo */}
         <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
