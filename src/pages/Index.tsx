@@ -84,7 +84,7 @@ const Index = () => {
       {/* Sticker button */}
       <Link
         to="/shop"
-        className="fixed top-4 right-4 z-50 animate-enter-up bg-primary text-primary-foreground px-5 py-3.5 rounded-2xl text-[0.85rem] font-extrabold uppercase tracking-[2px] shadow-[0_0_25px_hsl(45_90%_57%/0.4),0_4px_15px_rgba(0,0,0,0.3)] hover:scale-110 active:scale-95 transition-all duration-300 rotate-[-3deg] hover:rotate-0 border-2 border-primary/30 animate-pulse-glow"
+        className="fixed top-4 right-4 z-50 animate-enter-up bg-primary text-primary-foreground px-4 py-2.5 rounded-full text-[0.7rem] font-extrabold uppercase tracking-[1.5px] shadow-lg hover:scale-105 active:scale-95 transition-transform duration-200 rotate-[-2deg] hover:rotate-0"
         style={{ animationDelay: "0.6s" }}
       >
         🔮 Scopri i nostri servizi!
