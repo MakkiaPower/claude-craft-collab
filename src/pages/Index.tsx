@@ -378,7 +378,7 @@ const Index = () => {
       <div style={{position:"fixed",inset:0,pointerEvents:"none",background:"radial-gradient(ellipse at 50% 30%,rgba(244,196,48,.04) 0%,transparent 50%)"}}/>
 
       <div style={{textAlign:"center",marginBottom:"min(4vh,28px)",animation:`homeIn .7s ${SPRING} both`,flexShrink:0}}>
-        <img src={PRIAM_B64} alt="" style={{width:"min(18vw,72px)",height:"min(18vw,72px)",borderRadius:"50%",objectFit:"cover",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:12,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
+        <img src={logo} alt="AstroBastardo" style={{width:"min(18vw,72px)",height:"min(18vw,72px)",borderRadius:"50%",objectFit:"contain",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:12,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
         <h1 style={{fontSize:"min(9vw,38px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
           ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span>
         </h1>
