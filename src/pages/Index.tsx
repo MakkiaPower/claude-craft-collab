@@ -411,13 +411,13 @@ const Index = () => {
           <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.25)" strokeWidth="2" strokeLinecap="round" style={{width:14,height:14,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </div>
 
-        <div onClick={() => window.open("https://www.instagram.com/astro.bastardo/","_blank")} style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.06)",borderRadius:14,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+        <a href="https://www.instagram.com/astro.bastardo/" target="_blank" rel="noopener noreferrer" style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.06)",borderRadius:14,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`,textDecoration:"none",color:"inherit"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
           <div>
             <div style={{fontSize:"min(4.5vw,17px)",fontWeight:800,letterSpacing:.3}}>SEGUICI SU INSTAGRAM</div>
             <div style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.35)",marginTop:3,fontWeight:300}}>@astro.bastardo</div>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.25)" strokeWidth="2" strokeLinecap="round" style={{width:14,height:14,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-        </div>
+        </a>
       </div>
       <div style={{flex:1,minHeight:20}}/>
 
