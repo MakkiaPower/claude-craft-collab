@@ -139,10 +139,10 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col px-4 sm:px-5 py-4 sm:py-8">
+    <div className="flex min-h-dvh flex-col px-4 sm:px-5 py-4 sm:py-8" style={{paddingTop:"max(env(safe-area-inset-top, 16px), 16px)"}}>
       {/* Header */}
       <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-4 sm:mb-10">
-        <Link to="/shop" className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors active:scale-95">
+        <Link to="/shop" className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors active:scale-95 min-h-[44px]">
           <ArrowLeft className="h-4 w-4" />
           <img src={logo} alt="AstroBastardo" className="h-7 w-7 object-contain" width={28} height={28} />
         </Link>
@@ -161,9 +161,9 @@ const ProductDetail = () => {
               )}
             </div>
             {images.length > 1 && (
-              <div className="flex gap-2 mt-2.5 overflow-x-auto pb-1 -mx-1 px-1">
+              <div className="flex gap-2.5 mt-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory" style={{WebkitOverflowScrolling:"touch" as any,scrollbarWidth:"none"}}>
                 {images.map((img, i) => (
-                  <button key={i} onClick={() => setSelectedImage(i)} className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg border overflow-hidden flex-shrink-0 transition-all ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
+                  <button key={i} onClick={() => setSelectedImage(i)} className={`w-14 h-14 sm:w-14 sm:h-14 rounded-lg border overflow-hidden flex-shrink-0 transition-all snap-start ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
                     <img src={img.node.url} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}

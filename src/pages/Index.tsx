@@ -339,7 +339,7 @@ function Oracle({ onBack }: { onBack: () => void }) {
   const chargeText = progress < 0.3 ? "Concentrati, coglione..." : progress < 0.6 ? "Pensa forte, cazzo..." : progress < 0.85 ? "Tieni duro, stronzo..." : "Ci siamo, merda...";
 
   return (
-    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",userSelect:"none",WebkitUserSelect:"none",WebkitTouchCallout:"none" as any,overflow:"hidden",position:"relative",padding:"env(safe-area-inset-top,16px) 20px env(safe-area-inset-bottom,16px)",touchAction:"manipulation",boxSizing:"border-box"}}>
+    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",userSelect:"none",WebkitUserSelect:"none",WebkitTouchCallout:"none" as any,overflow:"hidden",position:"relative",padding:"max(env(safe-area-inset-top,16px),16px) min(5vw,20px) max(env(safe-area-inset-bottom,16px),16px)",touchAction:"manipulation",boxSizing:"border-box"}}>
       <style>{`
         *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -364,8 +364,8 @@ function Oracle({ onBack }: { onBack: () => void }) {
         <span style={{fontSize:13,fontWeight:500,color:"#F4C430",letterSpacing:1}}>← Menu</span>
       </div>
 
-      <div style={{textAlign:"center",marginBottom:isRevealed?0:"min(3vh,20px)",opacity:isRevealed?0:1,maxHeight:isRevealed?0:200,overflow:"hidden",transition:`all .6s ${SPRING}`,flexShrink:0}}>
-        <h1 style={{fontSize:"min(12vw,48px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
+      <div style={{textAlign:"center",marginBottom:isRevealed?0:"min(2.5vh,18px)",opacity:isRevealed?0:1,maxHeight:isRevealed?0:200,overflow:"hidden",transition:`all .6s ${SPRING}`,flexShrink:0}}>
+        <h1 style={{fontSize:"min(11vw,48px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
           L'ORACOLO<br/><span style={{color:"#F4C430"}}>BASTARDO</span>
         </h1>
       </div>
@@ -374,7 +374,7 @@ function Oracle({ onBack }: { onBack: () => void }) {
 
       {/* ORB */}
       <div onMouseDown={start} onMouseUp={cancel} onMouseLeave={cancel} onTouchStart={start} onTouchEnd={cancel}
-        style={{position:"relative",width:isRevealed?"min(32vw,130px)":"min(56vw,230px)",height:isRevealed?"min(32vw,130px)":"min(56vw,230px)",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0,transform:`translate(${sx}px,${sy}px)`,transition:`width .7s ${SPRING}, height .7s ${SPRING}`,animation:phase==="idle"?"gentleBob 5s ease-in-out infinite":"none"}}>
+        style={{position:"relative",width:isRevealed?"min(30vw,130px)":"min(50vw,230px)",height:isRevealed?"min(30vw,130px)":"min(50vw,230px)",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",flexShrink:0,transform:`translate(${sx}px,${sy}px)`,transition:`width .7s ${SPRING}, height .7s ${SPRING}`,animation:phase==="idle"?"gentleBob 5s ease-in-out infinite":"none",WebkitTapHighlightColor:"transparent"}}>
 
         {(phase==="charging"||isRevealed)&&<svg viewBox="0 0 200 200" style={{position:"absolute",inset:0,width:"100%",height:"100%",transform:"rotate(-90deg)",filter:`drop-shadow(0 0 ${4+progress*12}px rgba(244,196,48,${.15+progress*.45}))`}}>
           <circle cx="100" cy="100" r="96" fill="none" stroke="rgba(244,196,48,.04)" strokeWidth="1.5"/>
@@ -401,7 +401,7 @@ function Oracle({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* TEXT AREA */}
-      <div style={{minHeight:"min(28vh,200px)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"min(3vh,20px)",maxWidth:"min(92vw,400px)",width:"100%",textAlign:"center",flexShrink:1}}>
+      <div style={{minHeight:"min(22vh,160px)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"min(2.5vh,16px)",maxWidth:"min(92vw,400px)",width:"100%",textAlign:"center",flexShrink:1}}>
 
         {/* Idle — thumb icon + clearer instructions */}
         {phase==="idle"&&<div style={{animation:"fadeIn .8s ease both",display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
@@ -431,7 +431,7 @@ function Oracle({ onBack }: { onBack: () => void }) {
         {phase==="resetting"&&<div style={{animation:"fadeOut .35s ease forwards"}}><p style={{fontSize:"min(7vw,26px)",fontWeight:800,lineHeight:1.45,color:"#F6F6F4"}}>{answer}</p></div>}
       </div>
 
-      <div style={{position:"fixed",bottom:"max(env(safe-area-inset-bottom,10px),10px)",left:0,right:0,textAlign:"center",fontSize:8,color:"rgba(246,246,244,.08)",letterSpacing:4,textTransform:"uppercase"}}>Le stelle non ti calcolano</div>
+      <div style={{position:"fixed",bottom:"max(env(safe-area-inset-bottom,10px),10px)",left:0,right:0,textAlign:"center",fontSize:"min(2vw,8px)",color:"rgba(246,246,244,.08)",letterSpacing:4,textTransform:"uppercase",padding:"0 16px"}}>Le stelle non ti calcolano</div>
     </div>
   );
 }
@@ -447,8 +447,8 @@ const Index = () => {
   if (screen === "oracolo") return <Oracle onBack={goHome} />;
 
   return (
-    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",userSelect:"none",WebkitUserSelect:"none",position:"relative",padding:"max(env(safe-area-inset-top,20px),20px) 24px max(env(safe-area-inset-bottom,20px),24px)",boxSizing:"border-box",opacity:transitioning?0:1,transform:transitioning?"scale(1.03)":"scale(1)",transition:`all .4s ${SPRING}`,overflowY:"auto",overflowX:"hidden"}}>
-      <div style={{flex:1}}/>
+    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",userSelect:"none",WebkitUserSelect:"none",position:"relative",padding:"max(env(safe-area-inset-top,16px),16px) min(6vw,24px) max(env(safe-area-inset-bottom,16px),16px)",boxSizing:"border-box",opacity:transitioning?0:1,transform:transitioning?"scale(1.03)":"scale(1)",transition:`all .4s ${SPRING}`,overflowY:"auto",overflowX:"hidden",WebkitOverflowScrolling:"touch" as any}}>
+      <div style={{flex:1,minHeight:"min(2vh,10px)"}}/>
       <style>{`
         *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
         @keyframes homeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -458,49 +458,49 @@ const Index = () => {
       <div style={{position:"fixed",inset:0,opacity:.035,pointerEvents:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
       <div style={{position:"fixed",inset:0,pointerEvents:"none",background:"radial-gradient(ellipse at 50% 30%,rgba(244,196,48,.04) 0%,transparent 50%)"}}/>
 
-      <div style={{textAlign:"center",marginBottom:"min(5vh,32px)",animation:`homeIn .7s ${SPRING} both`,flexShrink:0}}>
-        <img src={logo} alt="AstroBastardo" style={{width:"min(22vw,80px)",height:"min(22vw,80px)",borderRadius:"50%",objectFit:"contain",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:14,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
-        <h1 style={{fontSize:"min(11vw,44px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
+      <div style={{textAlign:"center",marginBottom:"min(4vh,28px)",animation:`homeIn .7s ${SPRING} both`,flexShrink:0}}>
+        <img src={logo} alt="AstroBastardo" style={{width:"min(20vw,80px)",height:"min(20vw,80px)",borderRadius:"50%",objectFit:"contain",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:"min(2vh,14px)",display:"block",marginLeft:"auto",marginRight:"auto"}}/>
+        <h1 style={{fontSize:"min(10vw,44px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
           ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span>
         </h1>
-        <p style={{fontSize:12,color:"rgba(246,246,244,.3)",letterSpacing:4,textTransform:"uppercase",marginTop:8,fontWeight:400}}>Psicologia mascherata da astrologia</p>
+        <p style={{fontSize:"min(3vw,12px)",color:"rgba(246,246,244,.3)",letterSpacing:"min(1vw,4px)",textTransform:"uppercase",marginTop:"min(1.5vh,8px)",fontWeight:400}}>Psicologia mascherata da astrologia</p>
       </div>
 
-      <div style={{width:"100%",maxWidth:380,display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{width:"100%",maxWidth:380,display:"flex",flexDirection:"column",gap:"min(2.5vw,12px)"}}>
 
-        <div onClick={goOracle} style={{background:"linear-gradient(135deg,rgba(244,196,48,.1),rgba(244,196,48,.03))",border:"1px solid rgba(244,196,48,.25)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
-          <div>
-            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>L'ORACOLO BASTARDO</div>
-            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>Pensa. Premi. Incassa.</div>
+        <div onClick={goOracle} style={{background:"linear-gradient(135deg,rgba(244,196,48,.1),rgba(244,196,48,.03))",border:"1px solid rgba(244,196,48,.25)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`,WebkitTapHighlightColor:"transparent"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+          <div style={{minWidth:0}}>
+            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3}}>L'ORACOLO BASTARDO</div>
+            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.4)",marginTop:"min(1vw,4px)",fontWeight:400}}>Pensa. Premi. Incassa.</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,196,48,.5)" strokeWidth="2" strokeLinecap="round" style={{width:18,height:18,flexShrink:0}}><path d="M9 18l6-6-6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,196,48,.5)" strokeWidth="2" strokeLinecap="round" style={{width:18,height:18,flexShrink:0,marginLeft:8}}><path d="M9 18l6-6-6-6"/></svg>
         </div>
 
-        <div style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .2s both`,opacity:.45}}>
-          <div>
-            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3,color:"rgba(246,246,244,.45)"}}>TAROCCHI GIORNALIERI</div>
-            <div style={{fontSize:13,color:"rgba(246,246,244,.25)",marginTop:4,fontWeight:400}}>La tua lettura quotidiana</div>
+        <div style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .2s both`,opacity:.45}}>
+          <div style={{minWidth:0}}>
+            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3,color:"rgba(246,246,244,.45)"}}>TAROCCHI GIORNALIERI</div>
+            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.25)",marginTop:"min(1vw,4px)",fontWeight:400}}>La tua lettura quotidiana</div>
           </div>
-          <div style={{background:"rgba(244,196,48,.12)",border:"1px solid rgba(244,196,48,.25)",borderRadius:6,padding:"4px 10px",fontSize:9,fontWeight:700,color:"#F4C430",letterSpacing:1.5,textTransform:"uppercase",flexShrink:0}}>IN ARRIVO</div>
+          <div style={{background:"rgba(244,196,48,.12)",border:"1px solid rgba(244,196,48,.25)",borderRadius:6,padding:"4px 10px",fontSize:"min(2.3vw,9px)",fontWeight:700,color:"#F4C430",letterSpacing:1.5,textTransform:"uppercase",flexShrink:0,marginLeft:8,whiteSpace:"nowrap"}}>IN ARRIVO</div>
         </div>
 
-        <div onClick={() => navigate("/shop")} style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .3s both`,transition:`transform .2s ${SPRING}`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
-          <div>
-            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>SHOP</div>
-            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>Merch ufficiale</div>
+        <div onClick={() => navigate("/shop")} style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .3s both`,transition:`transform .2s ${SPRING}`,WebkitTapHighlightColor:"transparent"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+          <div style={{minWidth:0}}>
+            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3}}>SHOP</div>
+            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.4)",marginTop:"min(1vw,4px)",fontWeight:400}}>Merch ufficiale</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0,marginLeft:8}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </div>
 
-        <a href="https://www.instagram.com/astro.bastardo/" target="_blank" rel="noopener noreferrer" style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`,textDecoration:"none",color:"inherit"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
-          <div>
-            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>SEGUICI SU INSTAGRAM</div>
-            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>@astro.bastardo</div>
+        <a href="https://www.instagram.com/astro.bastardo/" target="_blank" rel="noopener noreferrer" style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`,textDecoration:"none",color:"inherit",WebkitTapHighlightColor:"transparent"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+          <div style={{minWidth:0}}>
+            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3}}>SEGUICI SU INSTAGRAM</div>
+            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.4)",marginTop:"min(1vw,4px)",fontWeight:400}}>@astro.bastardo</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0,marginLeft:8}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </a>
       </div>
-      <div style={{flex:1,minHeight:20}}/>
+      <div style={{flex:1,minHeight:"min(3vh,20px)"}}/>
 
       <div style={{position:"fixed",bottom:"max(env(safe-area-inset-bottom,10px),10px)",left:0,right:0,textAlign:"center",fontSize:"min(2vw,7px)",color:"rgba(246,246,244,.06)",letterSpacing:4,textTransform:"uppercase"}}>Le stelle non ti calcolano</div>
     </div>

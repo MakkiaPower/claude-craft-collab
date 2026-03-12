@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="flex min-h-dvh justify-center px-5 py-10">
+    <div className="flex min-h-dvh justify-center px-4 sm:px-5 py-8 sm:py-10" style={{paddingTop:"max(env(safe-area-inset-top, 32px), 32px)"}}>
       <div className="w-full max-w-[640px]">
         {/* Header */}
-        <div className="mb-10 text-center">
-          <Link to="/">
-            <img src={logo} alt="AstroBastardo" className="mx-auto mb-5 h-16 w-16 object-contain" />
+        <div className="mb-8 sm:mb-10 text-center">
+          <Link to="/" className="inline-block">
+            <img src={logo} alt="AstroBastardo" className="mx-auto mb-5 h-14 w-14 sm:h-16 sm:w-16 object-contain" />
           </Link>
           <h1 className="text-xl font-extrabold uppercase tracking-tight">Privacy Policy</h1>
           <p className="mt-2 text-[0.75rem] text-muted-foreground">Ultimo aggiornamento: Febbraio 2026</p>

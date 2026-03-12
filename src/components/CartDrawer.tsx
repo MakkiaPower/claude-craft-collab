@@ -52,7 +52,7 @@ export const CartDrawer = () => {
           )}
         </button>
       </SheetTrigger>
-      <SheetContent className="w-[92vw] sm:max-w-lg flex flex-col h-full bg-background border-input">
+      <SheetContent className="w-[92vw] sm:max-w-lg flex flex-col h-full bg-background border-input" style={{paddingBottom:"max(env(safe-area-inset-bottom, 16px), 16px)"}}>
         <SheetHeader className="flex-shrink-0">
           <SheetTitle className="text-foreground">Carrello</SheetTitle>
           <SheetDescription>

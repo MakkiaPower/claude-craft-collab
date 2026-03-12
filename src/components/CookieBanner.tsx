@@ -30,8 +30,8 @@ const CookieBanner = forwardRef<HTMLDivElement>((_, ref) => {
   if (!visible) return null;
 
   return (
-    <div ref={ref} className="fixed bottom-0 inset-x-0 z-50 animate-enter-up p-4">
-      <div className="mx-auto max-w-[440px] rounded-lg border border-input bg-background/95 backdrop-blur-sm p-5 shadow-lg">
+    <div ref={ref} className="fixed bottom-0 inset-x-0 z-50 animate-enter-up p-4" style={{paddingBottom:"max(env(safe-area-inset-bottom, 16px), 16px)"}}>
+      <div className="mx-auto max-w-[440px] rounded-lg border border-input bg-background/95 backdrop-blur-sm p-4 sm:p-5 shadow-lg">
         <p className="text-[0.78rem] text-muted-foreground leading-relaxed mb-4">
           Questo sito utilizza cookie analitici (Google Analytics) per capire come viene utilizzato.
           Nessun dato viene usato per pubblicità. Leggi la{" "}

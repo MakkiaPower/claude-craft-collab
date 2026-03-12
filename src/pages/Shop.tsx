@@ -79,20 +79,20 @@ const Shop = () => {
   if (success) return <SuccessView />;
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-5 py-10 relative">
+    <div className="flex min-h-dvh items-center justify-center px-4 sm:px-5 py-8 sm:py-10 relative">
       {/* Back button */}
       <Link
         to="/"
-        className="fixed top-4 left-4 z-10 text-[0.8rem] font-semibold text-primary hover:text-foreground transition-colors"
+        className="fixed left-4 z-10 text-[0.8rem] font-semibold text-primary hover:text-foreground transition-colors flex items-center min-h-[44px]"
         style={{ top: "max(env(safe-area-inset-top, 16px), 16px)" }}
       >
         ← Home
       </Link>
 
       <main className="w-full max-w-[440px] flex flex-col items-center text-center">
-        <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
+        <div className="mb-6 sm:mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
           <Link to="/">
-            <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain" width={130} height={130} />
+            <img src={logo} alt="AstroBastardo" className="h-[100px] w-[100px] sm:h-[130px] sm:w-[130px] object-contain" width={130} height={130} />
           </Link>
         </div>
 
@@ -111,7 +111,7 @@ const Shop = () => {
         </p>
 
         <p
-          className="mb-10 max-w-[370px] text-[0.82rem] font-semibold text-foreground leading-relaxed animate-enter-up"
+          className="mb-7 sm:mb-10 max-w-[370px] text-[0.82rem] font-semibold text-foreground leading-relaxed animate-enter-up"
           style={{ animationDelay: "0.4s" }}
         >
           Pezzi limitati. Niente restock. Chi è in lista entra per primo nello shop.{" "}

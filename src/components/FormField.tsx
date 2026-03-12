@@ -25,7 +25,7 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         autoComplete={type === "email" ? "email" : type === "tel" ? "tel" : "off"}
         aria-invalid={error}
         aria-describedby={error ? `${label}-error` : undefined}
-        className={`w-full rounded bg-transparent border px-[18px] py-4 text-[0.95rem] font-medium text-foreground placeholder:text-muted-foreground/40 placeholder:font-normal outline-none transition-colors duration-200 ${
+        className={`w-full rounded bg-transparent border px-4 py-3.5 sm:py-4 text-base font-medium text-foreground placeholder:text-muted-foreground/40 placeholder:font-normal outline-none transition-colors duration-200 ${
           error ? "border-destructive" : "border-input focus:border-primary"
         }`}
       />
