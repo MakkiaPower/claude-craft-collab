@@ -80,6 +80,14 @@ const Shop = () => {
 
   return (
     <div className="flex min-h-dvh items-center justify-center px-5 py-10 relative">
+      {/* Back button */}
+      <Link
+        to="/"
+        className="fixed top-4 left-4 z-10 text-[0.8rem] font-semibold text-primary hover:text-foreground transition-colors"
+        style={{ top: "max(env(safe-area-inset-top, 16px), 16px)" }}
+      >
+        ← Home
+      </Link>
 
       <main className="w-full max-w-[440px] flex flex-col items-center text-center">
         <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
