@@ -278,13 +278,15 @@ function Oracle({ onBack }: { onBack: () => void }) {
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
         @keyframes fadeOut{from{opacity:1}to{opacity:0}}
         @keyframes fpDraw{from{stroke-dashoffset:30;opacity:0}to{stroke-dashoffset:0;opacity:1}}
-        @keyframes fpPulse{0%,100%{opacity:.2}50%{opacity:.45}}
+        @keyframes fpPulse{0%,100%{opacity:.25}50%{opacity:.6}}
         @keyframes scanP{0%,100%{opacity:.5}50%{opacity:1}}
         @keyframes charReveal{0%{opacity:0;transform:translateY(20px) scale(.7);filter:blur(8px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
         @keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-        @keyframes gentleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+        @keyframes gentleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
         @keyframes revealGlow{0%{box-shadow:0 0 0 rgba(244,196,48,0)}40%{box-shadow:0 0 80px rgba(244,196,48,.3)}100%{box-shadow:0 0 25px rgba(244,196,48,.08)}}
         @keyframes bgPulse{0%,100%{opacity:.03}50%{opacity:.08}}
+        @keyframes orbRingPulse{0%,100%{box-shadow:0 0 20px rgba(244,196,48,.08), inset 0 0 15px rgba(244,196,48,.03)}50%{box-shadow:0 0 35px rgba(244,196,48,.18), inset 0 0 20px rgba(244,196,48,.06)}}
+        @keyframes thumbBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
       `}</style>
 
       <div style={{position:"fixed",inset:0,pointerEvents:"none",background:`radial-gradient(ellipse at 50% 45%,rgba(244,196,48,${bgE*.08}) 0%,transparent 55%)`,transition:"background .8s ease"}}/>
