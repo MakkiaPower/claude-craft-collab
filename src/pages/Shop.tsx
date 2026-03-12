@@ -1,134 +1,219 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { storefrontApiRequest, STOREFRONT_PRODUCTS_QUERY, ShopifyProduct } from "@/lib/shopify";
-import { CartDrawer } from "@/components/CartDrawer";
-import { Loader2, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/astrobastardo-logo.png";
+import SuccessView from "@/components/SuccessView";
+import FormField from "@/components/FormField";
+
+const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+const isValidPhone = (v: string) => /^\+?[0-9]{8,15}$/.test(v.replace(/[\s\-().]/g, ""));
 
 const Shop = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({ nome: "", cognome: "", email: "", telefono: "" });
+  const [errors, setErrors] = useState({ nome: false, cognome: false, email: false, telefono: false, privacy: false });
+  const [privacy, setPrivacy] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await storefrontApiRequest(STOREFRONT_PRODUCTS_QUERY, { first: 20 });
-        setProducts(data?.data?.products?.edges || []);
-      } catch (err) {
-        console.error("Failed to fetch products:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
+  const handleChange = useCallback((field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: false }));
   }, []);
 
-  return (
-    <div className="flex min-h-dvh flex-col px-4 sm:px-5 py-4 sm:py-8">
-      {/* Header */}
-      <header className="mx-auto w-full max-w-4xl flex items-center justify-between mb-6 sm:mb-12">
-        <Link to="/" className="flex items-center gap-2.5 active:scale-95 transition-transform">
-          <img src={logo} alt="AstroBastardo" className="h-8 w-8 object-contain" width={32} height={32} />
-          <span className="text-[0.65rem] font-extrabold uppercase tracking-[2px] text-foreground hidden sm:inline">AstroBastardo</span>
-        </Link>
-        <CartDrawer />
-      </header>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
 
-      <main className="mx-auto w-full max-w-4xl flex-1">
-        {/* Hero */}
-        <div className="mb-8 sm:mb-14 text-center">
-          <h1 className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight mb-2 sm:mb-3">
-            Le tue stelle, <span className="text-primary">senza filtri.</span>
-          </h1>
-          <p className="text-[0.8rem] sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-            Analisi astrologiche personalizzate. Niente oroscopi da bar — solo la verità scritta nelle stelle.
-          </p>
+    const newErrors = {
+      nome: !formData.nome.trim(),
+      cognome: !formData.cognome.trim(),
+      email: !isValidEmail(formData.email),
+      telefono: !isValidPhone(formData.telefono),
+      privacy: !privacy,
+    };
+    setErrors(newErrors);
+    if (Object.values(newErrors).some(Boolean)) return;
+
+    setSubmitting(true);
+    const payload = { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() };
+
+    const attempt = async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+      try {
+        const { data, error } = await supabase.functions.invoke("add-to-brevo", {
+          body: payload,
+        });
+        clearTimeout(timeout);
+        if (error) throw error;
+        if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
+        return data;
+      } catch (err) {
+        clearTimeout(timeout);
+        throw err;
+      }
+    };
+
+    try {
+      let data;
+      try {
+        data = await attempt();
+      } catch {
+        data = await attempt();
+      }
+
+      if (data?.alreadyRegistered) {
+        toast({ title: "Ci sei già! 🎉", description: "Questa email è già in lista. Ti avviseremo appena si apre lo shop!" });
+        setSubmitting(false);
+        return;
+      }
+      setSuccess(true);
+    } catch (err) {
+      console.error("Brevo error:", err);
+      toast({ variant: "destructive", title: "Errore", description: "Qualcosa è andato storto. Riprova tra qualche secondo." });
+      setSubmitting(false);
+    }
+  };
+
+  if (success) return <SuccessView />;
+
+  return (
+    <div className="flex min-h-dvh items-center justify-center px-5 py-10 relative">
+
+      <main className="w-full max-w-[440px] flex flex-col items-center text-center">
+        <div className="mb-9 animate-enter-up" style={{ animationDelay: "0.1s" }}>
+          <Link to="/">
+            <img src={logo} alt="AstroBastardo" className="h-[130px] w-[130px] object-contain" width={130} height={130} />
+          </Link>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : products.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <p className="text-muted-foreground text-sm mb-2">Nessun prodotto disponibile al momento.</p>
-            <p className="text-muted-foreground/60 text-xs">Torna presto — stiamo preparando qualcosa di grosso.</p>
-          </div>
-        ) : (
-          <div className="space-y-4 sm:space-y-6">
-            {products.map((product) => {
-              const image = product.node.images.edges[0]?.node;
-              const price = product.node.priceRange.minVariantPrice;
+        <div className="mb-5 animate-enter-up" style={{ animationDelay: "0.2s" }}>
+          <h1 className="text-[clamp(1.5rem,5.5vw,2.1rem)] font-extrabold uppercase tracking-tight leading-[1.15]">
+            L'AVETE CHIESTO IN TANTI.<br />
+            <span className="text-primary">ORA SONO CAZZI VOSTRI.</span>
+          </h1>
+        </div>
 
-              return (
-                <Link
-                  key={product.node.id}
-                  to={`/product/${product.node.handle}`}
-                  className="group flex flex-col sm:flex-row rounded-xl border border-input bg-foreground/[0.02] overflow-hidden hover:border-primary/30 active:scale-[0.98] transition-all duration-300"
-                >
-                  {/* Image */}
-                  <div className="w-full sm:w-56 md:w-64 aspect-[3/2] sm:aspect-square bg-foreground/[0.04] overflow-hidden flex-shrink-0">
-                    {image ? (
-                      <img
-                        src={image.url}
-                        alt={image.altText || product.node.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-muted-foreground/40 text-xs uppercase tracking-widest">No image</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 p-4 sm:p-6 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-[0.95rem] sm:text-lg font-extrabold uppercase tracking-wide text-foreground mb-1.5 sm:mb-2 group-hover:text-primary transition-colors">
-                        {product.node.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2 sm:line-clamp-3">
-                        {getShortDescription(product.node.description)}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-input/60">
-                      <span className="text-base sm:text-lg font-extrabold text-primary">
-                        €{parseFloat(price.amount).toFixed(2)}
-                      </span>
-                      <span className="flex items-center gap-1.5 text-[0.7rem] font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
-                        Scopri di più
-                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="mx-auto w-full max-w-4xl mt-10 sm:mt-16 pt-5 sm:pt-6 border-t border-input/40 text-center pb-4">
-        <p className="text-[0.65rem] text-muted-foreground/50 uppercase tracking-widest">
-          AstroBastardo © {new Date().getFullYear()}
+        <p
+          className="mb-3 text-base font-medium text-muted-foreground leading-normal animate-enter-up"
+          style={{ animationDelay: "0.3s" }}
+        >
+          Roba che non sapevi di volere. Finalmente qualcosa che puoi toccare.
         </p>
-      </footer>
+
+        <p
+          className="mb-10 max-w-[370px] text-[0.82rem] font-semibold text-foreground leading-relaxed animate-enter-up"
+          style={{ animationDelay: "0.4s" }}
+        >
+          Pezzi limitati. Niente restock. Chi è in lista entra per primo nello shop.{" "}
+          <span className="text-primary">Gli altri si attaccano.</span>
+        </p>
+
+        <form
+          onSubmit={handleSubmit}
+          className="w-full animate-enter-up"
+          style={{ animationDelay: "0.5s" }}
+          noValidate
+        >
+          <FormField
+            label="NOME"
+            type="text"
+            placeholder="Il tuo nome"
+            value={formData.nome}
+            error={errors.nome}
+            errorMessage="Inserisci il tuo nome"
+            onChange={(v) => handleChange("nome", v)}
+          />
+          <FormField
+            label="COGNOME"
+            type="text"
+            placeholder="Il tuo cognome"
+            value={formData.cognome}
+            error={errors.cognome}
+            errorMessage="Inserisci il tuo cognome"
+            onChange={(v) => handleChange("cognome", v)}
+          />
+          <FormField
+            label="EMAIL"
+            type="email"
+            placeholder="email@esempio.it"
+            value={formData.email}
+            error={errors.email}
+            errorMessage="Inserisci un'email valida"
+            onChange={(v) => handleChange("email", v)}
+          />
+          <FormField
+            label="TELEFONO"
+            type="tel"
+            placeholder="+39 3XX XXX XXXX"
+            value={formData.telefono}
+            error={errors.telefono}
+            errorMessage="Numero non valido"
+            hint="Ti avvisiamo su WhatsApp 24h prima di tutti."
+            onChange={(v) => handleChange("telefono", v)}
+          />
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="mt-2.5 w-full rounded bg-primary px-4 py-[18px] text-[0.85rem] font-extrabold uppercase tracking-[3px] text-primary-foreground transition-all duration-200 hover:brightness-90 active:brightness-75 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {submitting ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                STIAMO REGISTRANDO...
+              </span>
+            ) : "FAMMI ENTRARE"}
+          </button>
+
+          {submitting && (
+            <div className="mt-2 w-full h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full"
+                style={{ animation: "progress 2s ease-in-out infinite" }}
+              />
+            </div>
+          )}
+
+          <div className="mt-5 text-left">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={privacy}
+                onChange={(e) => {
+                  setPrivacy(e.target.checked);
+                  setErrors((prev) => ({ ...prev, privacy: false }));
+                }}
+                aria-label="Accetta la privacy policy"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-input accent-primary"
+              />
+              <span className="text-[0.72rem] text-muted-foreground leading-relaxed">
+                Ho letto e accetto la{" "}
+                <Link to="/privacy" className="text-foreground underline underline-offset-2">
+                  Privacy Policy
+                </Link>
+                . Acconsento al trattamento dei miei dati personali.
+              </span>
+            </label>
+            {errors.privacy && (
+              <p className="mt-1.5 ml-7 text-[0.72rem] font-medium text-destructive" role="alert">
+                Devi accettare la privacy policy
+              </p>
+            )}
+          </div>
+
+          <p className="mt-3 text-[0.68rem] text-muted-foreground/50 leading-relaxed">
+            Niente spam, niente cazzate. Ti scriviamo solo per il drop.
+          </p>
+        </form>
+
+      </main>
     </div>
   );
 };
-
-/** Extract a clean short description from the raw Shopify text */
-function getShortDescription(raw: string): string {
-  const markers = ["📌", "🔭", "📋", "🎯", "📦"];
-  let end = raw.length;
-  for (const m of markers) {
-    const idx = raw.indexOf(m);
-    if (idx !== -1 && idx < end) end = idx;
-  }
-  const intro = raw.substring(0, end).trim();
-  if (intro.length > 140) return intro.substring(0, 137).trimEnd() + "…";
-  return intro || raw.substring(0, 137).trimEnd() + "…";
-}
 
 export default Shop;
