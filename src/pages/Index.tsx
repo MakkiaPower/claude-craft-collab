@@ -392,46 +392,46 @@ const Index = () => {
       <div style={{position:"fixed",inset:0,opacity:.035,pointerEvents:"none",backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
       <div style={{position:"fixed",inset:0,pointerEvents:"none",background:"radial-gradient(ellipse at 50% 30%,rgba(244,196,48,.04) 0%,transparent 50%)"}}/>
 
-      <div style={{textAlign:"center",marginBottom:"min(4vh,28px)",animation:`homeIn .7s ${SPRING} both`,flexShrink:0}}>
-        <img src={logo} alt="AstroBastardo" style={{width:"min(18vw,72px)",height:"min(18vw,72px)",borderRadius:"50%",objectFit:"contain",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:12,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
-        <h1 style={{fontSize:"min(9vw,38px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
+      <div style={{textAlign:"center",marginBottom:"min(5vh,32px)",animation:`homeIn .7s ${SPRING} both`,flexShrink:0}}>
+        <img src={logo} alt="AstroBastardo" style={{width:"min(22vw,80px)",height:"min(22vw,80px)",borderRadius:"50%",objectFit:"contain",border:"1.5px solid rgba(244,196,48,.25)",animation:"logoPulse 4s ease-in-out infinite",marginBottom:14,display:"block",marginLeft:"auto",marginRight:"auto"}}/>
+        <h1 style={{fontSize:"min(11vw,44px)",fontWeight:900,letterSpacing:-1,margin:0,lineHeight:1.05}}>
           ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span>
         </h1>
-        <p style={{fontSize:"min(2.5vw,10px)",color:"rgba(246,246,244,.2)",letterSpacing:4,textTransform:"uppercase",marginTop:6,fontWeight:300}}>Psicologia mascherata da astrologia</p>
+        <p style={{fontSize:12,color:"rgba(246,246,244,.3)",letterSpacing:4,textTransform:"uppercase",marginTop:8,fontWeight:400}}>Psicologia mascherata da astrologia</p>
       </div>
 
-      <div style={{width:"100%",maxWidth:360,display:"flex",flexDirection:"column",gap:10}}>
+      <div style={{width:"100%",maxWidth:380,display:"flex",flexDirection:"column",gap:12}}>
 
-        <div onClick={goOracle} style={{background:"linear-gradient(135deg,rgba(244,196,48,.08),rgba(244,196,48,.02))",border:"1px solid rgba(244,196,48,.2)",borderRadius:14,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+        <div onClick={goOracle} style={{background:"linear-gradient(135deg,rgba(244,196,48,.1),rgba(244,196,48,.03))",border:"1px solid rgba(244,196,48,.25)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
           <div>
-            <div style={{fontSize:"min(4.5vw,17px)",fontWeight:800,letterSpacing:.3}}>L'ORACOLO BASTARDO</div>
-            <div style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.35)",marginTop:3,fontWeight:300}}>Pensa. Premi. Incassa.</div>
+            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>L'ORACOLO BASTARDO</div>
+            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>Pensa. Premi. Incassa.</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,196,48,.4)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0}}><path d="M9 18l6-6-6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,196,48,.5)" strokeWidth="2" strokeLinecap="round" style={{width:18,height:18,flexShrink:0}}><path d="M9 18l6-6-6-6"/></svg>
         </div>
 
-        <div style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.06)",borderRadius:14,padding:"18px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .2s both`,opacity:.45}}>
+        <div style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .2s both`,opacity:.45}}>
           <div>
-            <div style={{fontSize:"min(4.5vw,17px)",fontWeight:800,letterSpacing:.3,color:"rgba(246,246,244,.45)"}}>TAROCCHI GIORNALIERI</div>
-            <div style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.2)",marginTop:3,fontWeight:300}}>La tua lettura quotidiana</div>
+            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3,color:"rgba(246,246,244,.45)"}}>TAROCCHI GIORNALIERI</div>
+            <div style={{fontSize:13,color:"rgba(246,246,244,.25)",marginTop:4,fontWeight:400}}>La tua lettura quotidiana</div>
           </div>
-          <div style={{background:"rgba(244,196,48,.12)",border:"1px solid rgba(244,196,48,.25)",borderRadius:6,padding:"3px 8px",fontSize:"min(2.3vw,8px)",fontWeight:700,color:"#F4C430",letterSpacing:1.5,textTransform:"uppercase",flexShrink:0}}>IN ARRIVO</div>
+          <div style={{background:"rgba(244,196,48,.12)",border:"1px solid rgba(244,196,48,.25)",borderRadius:6,padding:"4px 10px",fontSize:9,fontWeight:700,color:"#F4C430",letterSpacing:1.5,textTransform:"uppercase",flexShrink:0}}>IN ARRIVO</div>
         </div>
 
-        <div onClick={() => navigate("/shop")} style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.06)",borderRadius:14,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .3s both`,transition:`transform .2s ${SPRING}`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+        <div onClick={() => navigate("/shop")} style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .3s both`,transition:`transform .2s ${SPRING}`}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
           <div>
-            <div style={{fontSize:"min(4.5vw,17px)",fontWeight:800,letterSpacing:.3}}>SHOP</div>
-            <div style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.35)",marginTop:3,fontWeight:300}}>Merch ufficiale</div>
+            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>SHOP</div>
+            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>Merch ufficiale</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.25)" strokeWidth="2" strokeLinecap="round" style={{width:14,height:14,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </div>
 
-        <a href="https://www.instagram.com/astro.bastardo/" target="_blank" rel="noopener noreferrer" style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.06)",borderRadius:14,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`,textDecoration:"none",color:"inherit"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+        <a href="https://www.instagram.com/astro.bastardo/" target="_blank" rel="noopener noreferrer" style={{background:"rgba(246,246,244,.02)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"20px 22px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .4s both`,transition:`transform .2s ${SPRING}`,textDecoration:"none",color:"inherit"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
           <div>
-            <div style={{fontSize:"min(4.5vw,17px)",fontWeight:800,letterSpacing:.3}}>SEGUICI SU INSTAGRAM</div>
-            <div style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.35)",marginTop:3,fontWeight:300}}>@astro.bastardo</div>
+            <div style={{fontSize:18,fontWeight:800,letterSpacing:.3}}>SEGUICI SU INSTAGRAM</div>
+            <div style={{fontSize:13,color:"rgba(246,246,244,.4)",marginTop:4,fontWeight:400}}>@astro.bastardo</div>
           </div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.25)" strokeWidth="2" strokeLinecap="round" style={{width:14,height:14,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(246,246,244,.3)" strokeWidth="2" strokeLinecap="round" style={{width:16,height:16,flexShrink:0}}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </a>
       </div>
       <div style={{flex:1,minHeight:20}}/>
