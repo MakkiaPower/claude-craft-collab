@@ -321,7 +321,7 @@ function Oracle({ onBack }: { onBack: () => void }) {
             <div style={{position:"absolute",width:"48%",height:1.5,background:"linear-gradient(90deg,transparent,rgba(244,196,48,.8),transparent)",top:`${22+progress*56}%`,boxShadow:"0 0 14px rgba(244,196,48,.35)",borderRadius:1,animation:"scanP .7s ease-in-out infinite"}}/>
           </>}
 
-          {(phase==="revealing"||phase==="reveal")&&<img src={PRIAM_B64} alt="" style={{position:"absolute",width:"65%",height:"65%",objectFit:"cover",borderRadius:"50%",opacity:phase==="reveal"?1:0,transform:phase==="reveal"?"scale(1)":"scale(.7)",transition:`all .5s ${SPRING}`,filter:"drop-shadow(0 0 20px rgba(244,196,48,.4))"}}/>}
+          {(phase==="revealing"||phase==="reveal")&&<img src={logo} alt="" style={{position:"absolute",width:"65%",height:"65%",objectFit:"contain",borderRadius:"50%",opacity:phase==="reveal"?1:0,transform:phase==="reveal"?"scale(1)":"scale(.7)",transition:`all .5s ${SPRING}`,filter:"drop-shadow(0 0 20px rgba(244,196,48,.4))"}}/>}
         </div>
       </div>
 
