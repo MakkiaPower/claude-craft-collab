@@ -352,8 +352,9 @@ function Oracle({ onBack }: { onBack: () => void }) {
         @keyframes gentleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
         @keyframes revealGlow{0%{box-shadow:0 0 0 rgba(244,196,48,0)}40%{box-shadow:0 0 80px rgba(244,196,48,.3)}100%{box-shadow:0 0 25px rgba(244,196,48,.08)}}
         @keyframes bgPulse{0%,100%{opacity:.03}50%{opacity:.08}}
-        @keyframes orbRingPulse{0%,100%{box-shadow:0 0 20px rgba(244,196,48,.08), inset 0 0 15px rgba(244,196,48,.03)}50%{box-shadow:0 0 35px rgba(244,196,48,.18), inset 0 0 20px rgba(244,196,48,.06)}}
+        @keyframes orbRingPulse{0%,100%{box-shadow:0 0 0 rgba(244,196,48,0)}50%{box-shadow:0 0 30px rgba(244,196,48,.15)}}
         @keyframes thumbBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+        @keyframes holdPulse{0%,100%{opacity:.3}50%{opacity:.7}}
       `}</style>
 
       <div style={{position:"fixed",inset:0,pointerEvents:"none",background:`radial-gradient(ellipse at 50% 45%,rgba(244,196,48,${bgE*.08}) 0%,transparent 55%)`,transition:"background .8s ease"}}/>
@@ -368,6 +369,8 @@ function Oracle({ onBack }: { onBack: () => void }) {
           L'ORACOLO<br/><span style={{color:"#F4C430"}}>BASTARDO</span>
         </h1>
       </div>
+
+      {phase==="idle"&&<p style={{margin:0,fontSize:"max(4vw,16px)",fontWeight:700,letterSpacing:3,textTransform:"uppercase",color:"#F4C430",animation:"holdPulse 3s ease-in-out infinite"}}>TIENI PREMUTO</p>}
 
       {/* ORB */}
       <div onMouseDown={start} onMouseUp={cancel} onMouseLeave={cancel} onTouchStart={start} onTouchEnd={cancel}
@@ -401,17 +404,13 @@ function Oracle({ onBack }: { onBack: () => void }) {
       <div style={{minHeight:"min(28vh,200px)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"min(3vh,20px)",maxWidth:"min(92vw,400px)",width:"100%",textAlign:"center",flexShrink:1}}>
 
         {/* Idle — thumb icon + clearer instructions */}
-        {phase==="idle"&&<div style={{animation:"fadeIn .8s ease both",display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <div style={{animation:"thumbBounce 2s ease-in-out infinite",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <svg viewBox="0 0 24 24" fill="none" style={{width:28,height:28}}>
-              <path d="M12 2C10.2 2 8.5 2.7 7.2 4M16.8 4C15.5 2.7 13.8 2 12 2M12 6C11.2 6 10.5 6.3 9.9 6.9M14.1 6.9C13.5 6.3 12.8 6 12 6M6 8C5.2 9.5 4.8 11.2 5 13M19 13C19.2 11.2 18.8 9.5 18 8M7 14C7.3 16 8.5 17.8 10.2 19M13.8 19C15.5 17.8 16.7 16 17 14M12 10C11.4 10 11 10.4 11 11L11 15C11 15.6 11.4 16 12 16M12 16C12.6 16 13 15.6 13 15L13 11C13 10.4 12.6 10 12 10" stroke="#F4C430" strokeWidth="1.2" strokeLinecap="round" opacity=".6"/>
-            </svg>
-          </div>
-          <p style={{fontSize:15,color:"rgba(246,246,244,.45)",fontWeight:500,letterSpacing:.5,margin:0,lineHeight:1.6}}>
-            Appoggia il dito e tieni premuto
+        {phase==="idle"&&<div style={{animation:"fadeIn .8s ease both",display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
+          <p style={{fontSize:"min(3.5vw,14px)",color:"#F6F6F4",fontWeight:700,letterSpacing:.5,margin:0,lineHeight:1.6}}>
+            PENSA ALLA DOMANDA
           </p>
-          <p style={{fontSize:11,color:"rgba(246,246,244,.15)",fontWeight:300,letterSpacing:1.5,margin:0,textTransform:"uppercase"}}>
-            Pensa alla tua domanda
+          <div style={{height:4}}/>
+          <p style={{fontSize:"min(2.8vw,11px)",color:"rgba(246,246,244,.35)",fontWeight:300,letterSpacing:1,margin:0}}>
+            poi tieni premuto il sigillo
           </p>
         </div>}
 
