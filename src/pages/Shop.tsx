@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import logo from "@/assets/astrobastardo-logo.png";
@@ -10,6 +11,13 @@ const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 const isValidPhone = (v: string) => /^\+?[0-9]{8,15}$/.test(v.replace(/[\s\-().]/g, ""));
 
 const Shop = () => {
+  usePageMeta({
+    title: "Waitlist Drop 001 — AstroBastardo | Streetwear Limitato",
+    description: "Iscriviti alla waitlist esclusiva per il Drop 001 di AstroBastardo. Pezzi limitati, niente restock. Chi è in lista entra per primo.",
+    canonical: "https://astrobastardo.it/shop",
+    ogTitle: "AstroBastardo — Drop 001 | Streetwear Limitato",
+    ogDescription: "Pezzi limitati. Niente restock. Iscriviti alla waitlist esclusiva per il Drop 001 di AstroBastardo.",
+  });
   const [formData, setFormData] = useState({ nome: "", cognome: "", email: "", telefono: "" });
   const [errors, setErrors] = useState({ nome: false, cognome: false, email: false, telefono: false, privacy: false });
   const [privacy, setPrivacy] = useState(false);
@@ -39,20 +47,12 @@ const Shop = () => {
     const payload = { nome: formData.nome.trim(), cognome: formData.cognome.trim(), email: formData.email.trim(), telefono: formData.telefono.trim() };
 
     const attempt = async () => {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
-      try {
-        const { data, error } = await supabase.functions.invoke("add-to-brevo", {
-          body: payload,
-        });
-        clearTimeout(timeout);
-        if (error) throw error;
-        if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
-        return data;
-      } catch (err) {
-        clearTimeout(timeout);
-        throw err;
-      }
+      const { data, error } = await supabase.functions.invoke("add-to-brevo", {
+        body: payload,
+      });
+      if (error) throw error;
+      if (data && !data.success) throw new Error(data.error || "Errore sconosciuto");
+      return data;
     };
 
     try {

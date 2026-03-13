@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap&font-display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -77,10 +77,9 @@
     }
   }
 
-  /* Better touch targets */
-  button, a, [role="button"] {
+  /* Better touch targets — only for primary interactive elements, not small inline controls */
+  button:not([data-compact]), a:not([data-compact]), [role="button"]:not([data-compact]) {
     min-height: 44px;
-    min-width: 44px;
   }
 
   /* Prevent pull-to-refresh on overscroll */

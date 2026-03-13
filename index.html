@@ -35,26 +35,30 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "AstroBastardo — Drop 001",
-      "description": "Pezzi limitati. Niente restock. Iscriviti alla waitlist esclusiva per il Drop 001 di AstroBastardo.",
-      "url": "https://astrobastardo.it/",
-      "publisher": {
-        "@type": "Brand",
-        "name": "AstroBastardo",
-        "logo": "https://astrobastardo.it/favicon.png"
+      "@type": "Organization",
+      "name": "AstroBastardo",
+      "legalName": "ASTRO BASTARDO S.R.L.",
+      "url": "https://astrobastardo.it",
+      "logo": "https://astrobastardo.it/favicon.png",
+      "description": "Psicologia mascherata da astrologia. Oracolo, tarocchi, verità scomode e streetwear in edizione limitata.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "info@astrobastardo.it",
+        "contactType": "customer service"
       }
     }
     </script>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4372M9G1L3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4372M9G1L3');
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AstroBastardo",
+      "url": "https://astrobastardo.it",
+      "description": "L'universo di AstroBastardo in un'app. Oracolo, tarocchi, verità scomode e zero buonismo cosmico."
+    }
     </script>
+
+    <!-- GA4 loaded conditionally via CookieBanner consent (see src/lib/ga4.ts) -->
   </head>
 
   <body>

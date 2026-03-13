@@ -1,7 +1,14 @@
 import logo from "@/assets/astrobastardo-logo.png";
 import { Link } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 const PrivacyPolicy = () => {
+  usePageMeta({
+    title: "Privacy Policy — AstroBastardo",
+    description: "Informativa sulla privacy di AstroBastardo. Come trattiamo i tuoi dati personali, cookie policy e diritti GDPR.",
+    canonical: "https://astrobastardo.it/privacy",
+    noindex: true,
+  });
   return (
     <div className="flex min-h-dvh justify-center px-4 sm:px-5 py-8 sm:py-10" style={{paddingTop:"max(env(safe-area-inset-top, 32px), 32px)"}}>
       <div className="w-full max-w-[640px]">

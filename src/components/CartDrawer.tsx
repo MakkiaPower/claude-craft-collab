@@ -84,15 +84,15 @@ export const CartDrawer = () => {
                         <p className="font-bold text-sm text-primary">{item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
-                        <button onClick={() => removeItem(item.variantId)} className="p-1 hover:bg-destructive/10 rounded transition-colors">
+                        <button data-compact onClick={() => removeItem(item.variantId)} className="p-1 hover:bg-destructive/10 rounded transition-colors">
                           <Trash2 className="h-3.5 w-3.5 text-destructive" />
                         </button>
                         <div className="flex items-center gap-1">
-                          <button onClick={() => updateQuantity(item.variantId, item.quantity - 1)} className="h-6 w-6 rounded border border-input flex items-center justify-center hover:bg-foreground/5">
+                          <button data-compact onClick={() => updateQuantity(item.variantId, item.quantity - 1)} className="h-7 w-7 rounded border border-input flex items-center justify-center hover:bg-foreground/5 active:bg-foreground/10">
                             <Minus className="h-3 w-3" />
                           </button>
                           <span className="w-6 text-center text-xs font-bold">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.variantId, item.quantity + 1)} className="h-6 w-6 rounded border border-input flex items-center justify-center hover:bg-foreground/5">
+                          <button data-compact onClick={() => updateQuantity(item.variantId, item.quantity + 1)} className="h-7 w-7 rounded border border-input flex items-center justify-center hover:bg-foreground/5 active:bg-foreground/10">
                             <Plus className="h-3 w-3" />
                           </button>
                         </div>

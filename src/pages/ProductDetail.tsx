@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { storefrontApiRequest, STOREFRONT_PRODUCT_BY_HANDLE_QUERY } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -90,6 +91,16 @@ const ProductDetail = () => {
   const addItem = useCartStore(state => state.addItem);
   const isCartLoading = useCartStore(state => state.isLoading);
 
+  usePageMeta({
+    title: product ? `${product.title} — AstroBastardo` : "Prodotto — AstroBastardo",
+    description: product
+      ? `${product.title} di AstroBastardo. ${product.description.slice(0, 140)}...`
+      : "Scopri i prodotti esclusivi di AstroBastardo.",
+    canonical: `https://astrobastardo.it/product/${handle}`,
+    ogImage: product?.images.edges[0]?.node.url || undefined,
+    ogType: "product",
+  });
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -155,16 +166,16 @@ const ProductDetail = () => {
           <div>
             <div className="aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden bg-foreground/[0.04]">
               {images[selectedImage] ? (
-                <img src={images[selectedImage].node.url} alt={images[selectedImage].node.altText || product.title} className="w-full h-full object-cover" />
+                <img src={images[selectedImage].node.url} alt={images[selectedImage].node.altText || product.title} className="w-full h-full object-cover" loading="eager" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground/40 text-xs uppercase">No image</div>
               )}
             </div>
             {images.length > 1 && (
-              <div className="flex gap-2.5 mt-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory" style={{WebkitOverflowScrolling:"touch" as any,scrollbarWidth:"none"}}>
+              <div className="flex gap-2.5 mt-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory hide-scrollbar" style={{WebkitOverflowScrolling:"touch" as any}}>
                 {images.map((img, i) => (
-                  <button key={i} onClick={() => setSelectedImage(i)} className={`w-14 h-14 sm:w-14 sm:h-14 rounded-lg border overflow-hidden flex-shrink-0 transition-all snap-start ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
-                    <img src={img.node.url} alt="" className="w-full h-full object-cover" />
+                  <button data-compact key={i} onClick={() => setSelectedImage(i)} className={`w-16 h-16 sm:w-16 sm:h-16 rounded-lg border overflow-hidden flex-shrink-0 transition-all snap-start ${i === selectedImage ? 'border-primary ring-1 ring-primary/30' : 'border-input opacity-60 hover:opacity-100'}`}>
+                    <img src={img.node.url} alt="" className="w-full h-full object-cover" loading="lazy" />
                   </button>
                 ))}
               </div>
