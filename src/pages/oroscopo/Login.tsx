@@ -20,29 +20,32 @@ export default function Login() {
     navigate('/oroscopo/dashboard')
   }
 
+  const inputStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:16,outline:"none",boxSizing:"border-box",transition:`border .3s ${S}, background .3s`}
+
   return (
-    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"16px min(6vw,24px)"}}>
-      <div style={{width:"100%",maxWidth:360}}>
-        <div style={{textAlign:"center",marginBottom:40}}>
-          <h1 style={{fontSize:24,fontWeight:900,letterSpacing:-.5,margin:0}}>ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span></h1>
+    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"24px min(8vw,32px)"}}>
+      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <div style={{width:"100%",maxWidth:360,animation:`fadeUp .8s ${S} both`}}>
+        <div style={{textAlign:"center",marginBottom:48}}>
+          <h1 style={{fontSize:22,fontWeight:900,letterSpacing:-.5,margin:"0 0 24px"}}>ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span></h1>
+          <h2 style={{fontSize:28,fontWeight:900,letterSpacing:-.5,margin:0}}>Bentornato,<br/>bastardo.</h2>
         </div>
-        <h2 style={{fontSize:22,fontWeight:800,textAlign:"center",marginBottom:32}}>Bentornato, bastardo.</h2>
         <form onSubmit={handleLogin} style={{display:"flex",flexDirection:"column",gap:16}}>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Email</label>
-            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="la@tua.email" style={{width:"100%",background:"rgba(246,246,244,.04)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:12,padding:"14px 16px",fontSize:15,outline:"none",boxSizing:"border-box",transition:"border .2s"}} onFocus={e=>(e.currentTarget.style.borderColor="rgba(244,196,48,.4)")} onBlur={e=>(e.currentTarget.style.borderColor="rgba(246,246,244,.1)")}/>
+            <label style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Email</label>
+            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="la@tua.email" style={inputStyle} onFocus={e=>{e.currentTarget.style.borderColor="rgba(244,196,48,.5)";e.currentTarget.style.background="rgba(246,246,244,.07)"}} onBlur={e=>{e.currentTarget.style.borderColor="rgba(246,246,244,.1)";e.currentTarget.style.background="rgba(246,246,244,.05)"}}/>
           </div>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Password</label>
-            <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="••••••••" style={{width:"100%",background:"rgba(246,246,244,.04)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:12,padding:"14px 16px",fontSize:15,outline:"none",boxSizing:"border-box",transition:"border .2s"}} onFocus={e=>(e.currentTarget.style.borderColor="rgba(244,196,48,.4)")} onBlur={e=>(e.currentTarget.style.borderColor="rgba(246,246,244,.1)")}/>
+            <label style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Password</label>
+            <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="••••••••" style={inputStyle} onFocus={e=>{e.currentTarget.style.borderColor="rgba(244,196,48,.5)";e.currentTarget.style.background="rgba(246,246,244,.07)"}} onBlur={e=>{e.currentTarget.style.borderColor="rgba(246,246,244,.1)";e.currentTarget.style.background="rgba(246,246,244,.05)"}}/>
           </div>
           {error && <p style={{color:"#CC3333",fontSize:13,margin:0}}>{error}</p>}
-          <button type="submit" disabled={loading} style={{background:"#F4C430",color:"#0a0a0a",border:"none",borderRadius:12,padding:"14px",fontSize:16,fontWeight:800,cursor:"pointer",opacity:loading?.5:1,transition:`transform .2s ${S}`}} onMouseDown={e=>(e.currentTarget.style.transform="scale(0.97)")} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")}>
+          <button type="submit" disabled={loading} style={{background:"#F4C430",color:"#0a0a0a",border:"none",borderRadius:14,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",opacity:loading?.5:1,transition:`transform .15s ${S}, opacity .2s`,marginTop:8}} onMouseDown={e=>(e.currentTarget.style.transform="scale(0.97)")} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")} onTouchStart={e=>(e.currentTarget.style.transform="scale(0.97)")} onTouchEnd={e=>(e.currentTarget.style.transform="scale(1)")}>
             {loading ? 'Accesso...' : 'Accedi'}
           </button>
         </form>
-        <p style={{textAlign:"center",fontSize:13,color:"rgba(246,246,244,.4)",marginTop:24}}>
-          Non hai un account? <Link to="/oroscopo/signup" style={{color:"#F4C430",textDecoration:"none"}}>Registrati</Link>
+        <p style={{textAlign:"center",fontSize:14,color:"rgba(246,246,244,.3)",marginTop:32}}>
+          Non hai un account? <Link to="/oroscopo/signup" style={{color:"#F4C430",textDecoration:"none",fontWeight:600}}>Registrati</Link>
         </p>
       </div>
     </div>
