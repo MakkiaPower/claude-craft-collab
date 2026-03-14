@@ -81,7 +81,7 @@ export default function AdminWrite() {
         <span style={{fontWeight:900,fontSize:16}}>ASTRO<span style={{color:"#F4C430"}}>BASTARDO</span></span><span style={{color:"rgba(246,246,244,.3)",fontSize:12,marginLeft:8}}>Admin</span>
       </div>
 
-      <div style={{maxWidth:800,margin:"0 auto",padding:"24px 24px"}}>
+      <div style={{maxWidth:800,margin:"0 auto",padding:"24px 16px"}}>
         <Link to="/oroscopo/admin" style={{color:"rgba(246,246,244,.4)",fontSize:13,textDecoration:"none",display:"inline-block",marginBottom:24}}>&larr; Torna alla lista</Link>
 
         <div style={{display:"grid",gridTemplateColumns:window.innerWidth<768?"1fr":"1fr 260px",gap:24}}>

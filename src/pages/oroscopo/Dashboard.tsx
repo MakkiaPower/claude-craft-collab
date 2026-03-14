@@ -36,7 +36,7 @@ export default function Dashboard() {
   return (
     <div style={{minHeight:"100dvh",background:"#0a0a0a",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",paddingBottom:84}}>
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <div style={{maxWidth:640,margin:"0 auto",padding:"min(8vw,36px) min(6vw,24px) 0"}}>
+      <div style={{maxWidth:640,margin:"0 auto",padding:"min(8vw,36px) 16px 0"}}>
         {/* Header */}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:"min(8vw,36px)",animation:`fadeUp .6s ${S} both`}}>
           <div>
@@ -68,7 +68,7 @@ export default function Dashboard() {
             </div>
 
             {(horoscope.love || horoscope.work) && (
-              <div style={{display:"grid",gridTemplateColumns:horoscope.love && horoscope.work ? "1fr 1fr" : "1fr",gap:12,animation:`fadeUp .6s ${S} .1s both`}}>
+              <div style={{display:"grid",gridTemplateColumns:horoscope.love && horoscope.work && window.innerWidth>=400 ? "1fr 1fr" : "1fr",gap:12,animation:`fadeUp .6s ${S} .1s both`}}>
                 {horoscope.love && <Card><Dot color="#CC3333"/><Label color="#CC3333">Amore</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.love}</p></Card>}
                 {horoscope.work && <Card><Dot color="#D4A843"/><Label color="#D4A843">Lavoro</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.work}</p></Card>}
               </div>
@@ -87,7 +87,7 @@ export default function Dashboard() {
             {horoscope.transits && horoscope.transits.length > 0 && (
               <details style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.06)",borderRadius:16,animation:`fadeUp .6s ${S} .2s both`}}>
                 <summary style={{padding:"16px 22px",cursor:"pointer",fontSize:13,color:"rgba(246,246,244,.35)",fontWeight:500,letterSpacing:.3}}>Transiti attivi sul tuo tema natale</summary>
-                <div style={{padding:"0 22px 22px",display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+                <div style={{padding:"0 22px 22px",display:"grid",gridTemplateColumns:window.innerWidth>=400?"1fr 1fr":"1fr",gap:10}}>
                   {horoscope.transits.map((t, i) => (
                     <div key={i} style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.05)",borderRadius:12,padding:14}}>
                       <p style={{fontSize:13,fontWeight:700,color:"#F4C430",margin:"0 0 4px"}}>{t.name}</p>
@@ -136,8 +136,8 @@ export function BottomNav({ navigate, active }: { navigate: (p: string) => void;
   return (
     <nav style={{position:"fixed",bottom:0,left:0,right:0,background:"rgba(10,10,10,.92)",borderTop:"1px solid rgba(246,246,244,.05)",display:"flex",justifyContent:"space-around",alignItems:"center",height:68,zIndex:50,backdropFilter:"blur(12px)",WebkitBackdropFilter:"blur(12px)",paddingBottom:"env(safe-area-inset-bottom,0)"}}>
       {items.map(n => (
-        <div key={n.key} onClick={()=>navigate(n.path)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4,cursor:"pointer",padding:"10px 20px",color:active===n.key?"#F4C430":"rgba(246,246,244,.2)",transition:`color .2s`}}>
-          <n.icon size={21} strokeWidth={active===n.key?2.5:1.5}/>
+        <div key={n.key} onClick={()=>navigate(n.path)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"10px 24px",minHeight:44,justifyContent:"center",color:active===n.key?"#F4C430":"rgba(246,246,244,.2)",transition:`color .2s`}}>
+          <n.icon size={22} strokeWidth={active===n.key?2.5:1.5}/>
           <span style={{fontSize:10,fontWeight:active===n.key?700:400,letterSpacing:.3}}>{n.label}</span>
         </div>
       ))}

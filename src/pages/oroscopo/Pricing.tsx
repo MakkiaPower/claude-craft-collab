@@ -28,7 +28,7 @@ export default function Pricing() {
   }
 
   return (
-    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"24px min(8vw,32px)"}}>
+    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"24px 16px"}}>
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}`}</style>
       <div style={{width:"100%",maxWidth:420,animation:`fadeUp .8s ${S} both`}}>
         <div style={{textAlign:"center",marginBottom:48}}>
@@ -37,7 +37,7 @@ export default function Pricing() {
           <p style={{fontSize:14,color:"rgba(246,246,244,.35)",margin:0}}>Oroscopo personalizzato, scritto per te. Ogni giorno.</p>
         </div>
 
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+        <div style={{display:"grid",gridTemplateColumns:window.innerWidth>=400?"1fr 1fr":"1fr",gap:14}}>
           {/* Mensile */}
           <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:16,padding:22,display:"flex",flexDirection:"column"}}>
             <div style={{fontSize:15,fontWeight:800,marginBottom:6}}>Mensile</div>

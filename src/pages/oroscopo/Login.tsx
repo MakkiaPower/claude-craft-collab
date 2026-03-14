@@ -23,7 +23,7 @@ export default function Login() {
   const inputStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:16,outline:"none",boxSizing:"border-box",transition:`border .3s ${S}, background .3s`}
 
   return (
-    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"24px min(8vw,32px)"}}>
+    <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",padding:"24px 16px"}}>
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}`}</style>
       <div style={{width:"100%",maxWidth:360,animation:`fadeUp .8s ${S} both`}}>
         <div style={{textAlign:"center",marginBottom:48}}>
@@ -32,11 +32,11 @@ export default function Login() {
         </div>
         <form onSubmit={handleLogin} style={{display:"flex",flexDirection:"column",gap:16}}>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Email</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.35)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Email</label>
             <input type="email" value={email} onChange={e=>setEmail(e.target.value)} required placeholder="la@tua.email" style={inputStyle} onFocus={e=>{e.currentTarget.style.borderColor="rgba(244,196,48,.5)";e.currentTarget.style.background="rgba(246,246,244,.07)"}} onBlur={e=>{e.currentTarget.style.borderColor="rgba(246,246,244,.1)";e.currentTarget.style.background="rgba(246,246,244,.05)"}}/>
           </div>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Password</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.35)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Password</label>
             <input type="password" value={password} onChange={e=>setPassword(e.target.value)} required placeholder="••••••••" style={inputStyle} onFocus={e=>{e.currentTarget.style.borderColor="rgba(244,196,48,.5)";e.currentTarget.style.background="rgba(246,246,244,.07)"}} onBlur={e=>{e.currentTarget.style.borderColor="rgba(246,246,244,.1)";e.currentTarget.style.background="rgba(246,246,244,.05)"}}/>
           </div>
           {error && <p style={{color:"#CC3333",fontSize:13,margin:0}}>{error}</p>}

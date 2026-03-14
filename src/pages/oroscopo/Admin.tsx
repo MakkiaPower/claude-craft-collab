@@ -52,22 +52,22 @@ export default function Admin() {
         <Link to="/oroscopo/dashboard" style={{color:"rgba(246,246,244,.4)",fontSize:13,textDecoration:"none"}}>Torna alla dashboard</Link>
       </div>
 
-      <div style={{maxWidth:700,margin:"0 auto",padding:"32px 24px"}}>
+      <div style={{maxWidth:700,margin:"0 auto",padding:"24px 16px"}}>
         <h1 style={{fontSize:24,fontWeight:900,marginBottom:4}}>Oroscopi di oggi</h1>
         <p style={{fontSize:13,color:"rgba(246,246,244,.35)",marginBottom:32}}>{formattedDate}</p>
 
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:32}}>
-          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:16,textAlign:"center"}}>
-            <p style={{fontSize:24,fontWeight:900,margin:"0 0 4px"}}>{subscribers.length}</p>
-            <p style={{fontSize:9,color:"rgba(246,246,244,.35)",letterSpacing:2,textTransform:"uppercase",margin:0}}>Abbonati</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10,marginBottom:32}}>
+          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"14px 8px",textAlign:"center"}}>
+            <p style={{fontSize:22,fontWeight:900,margin:"0 0 4px"}}>{subscribers.length}</p>
+            <p style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:1.5,textTransform:"uppercase",margin:0}}>Abbonati</p>
           </div>
-          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:16,textAlign:"center"}}>
-            <p style={{fontSize:24,fontWeight:900,margin:"0 0 4px",color:"#2D8A4E"}}>{writtenCount}</p>
-            <p style={{fontSize:9,color:"rgba(246,246,244,.35)",letterSpacing:2,textTransform:"uppercase",margin:0}}>Scritti</p>
+          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"14px 8px",textAlign:"center"}}>
+            <p style={{fontSize:22,fontWeight:900,margin:"0 0 4px",color:"#2D8A4E"}}>{writtenCount}</p>
+            <p style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:1.5,textTransform:"uppercase",margin:0}}>Scritti</p>
           </div>
-          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:16,textAlign:"center"}}>
-            <p style={{fontSize:24,fontWeight:900,margin:"0 0 4px",color:"#CC3333"}}>{missingCount}</p>
-            <p style={{fontSize:9,color:"rgba(246,246,244,.35)",letterSpacing:2,textTransform:"uppercase",margin:0}}>Mancanti</p>
+          <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:14,padding:"14px 8px",textAlign:"center"}}>
+            <p style={{fontSize:22,fontWeight:900,margin:"0 0 4px",color:"#CC3333"}}>{missingCount}</p>
+            <p style={{fontSize:10,color:"rgba(246,246,244,.35)",letterSpacing:1.5,textTransform:"uppercase",margin:0}}>Mancanti</p>
           </div>
         </div>
 

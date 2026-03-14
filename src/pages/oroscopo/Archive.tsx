@@ -29,7 +29,7 @@ export default function Archive() {
   return (
     <div style={{minHeight:"100dvh",background:"#0a0a0a",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",paddingBottom:84}}>
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <div style={{maxWidth:640,margin:"0 auto",padding:"min(8vw,36px) min(6vw,24px) 0"}}>
+      <div style={{maxWidth:640,margin:"0 auto",padding:"min(8vw,36px) 16px 0"}}>
         <h1 style={{fontSize:"min(7vw,28px)",fontWeight:900,marginBottom:"min(6vw,28px)",letterSpacing:-.5,animation:`fadeUp .6s ${S} both`}}>Archivio</h1>
 
         {horoscopes.length > 0 ? (

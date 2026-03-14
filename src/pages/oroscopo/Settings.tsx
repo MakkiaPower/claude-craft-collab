@@ -69,26 +69,26 @@ export default function Settings() {
   return (
     <div style={{minHeight:"100dvh",background:"#0a0a0a",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",paddingBottom:84}}>
       <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}`}</style>
-      <div style={{maxWidth:440,margin:"0 auto",padding:"min(8vw,36px) min(6vw,24px) 0"}}>
+      <div style={{maxWidth:440,margin:"0 auto",padding:"min(8vw,36px) 16px 0"}}>
         <h1 style={{fontSize:"min(7vw,28px)",fontWeight:900,marginBottom:"min(8vw,36px)",letterSpacing:-.5,animation:`fadeUp .6s ${S} both`}}>Impostazioni</h1>
 
         {/* Profilo */}
-        <h2 style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,marginBottom:14,animation:`fadeUp .6s ${S} .05s both`}}>Profilo</h2>
+        <h2 style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,marginBottom:14,animation:`fadeUp .6s ${S} .05s both`}}>Profilo</h2>
         <form onSubmit={handleSave} style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.06)",borderRadius:16,padding:22,display:"flex",flexDirection:"column",gap:16,marginBottom:32,animation:`fadeUp .6s ${S} .1s both`}}>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Nome</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Nome</label>
             <input type="text" value={displayName} onChange={e=>setDisplayName(e.target.value)} placeholder="Come vuoi essere chiamato" style={inputStyle} onFocus={focusIn} onBlur={focusOut}/>
           </div>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Data di nascita</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Data di nascita</label>
             <input type="date" value={birthDate} onChange={e=>setBirthDate(e.target.value)} style={{...inputStyle,colorScheme:"dark"}}/>
           </div>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Ora di nascita</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Ora di nascita</label>
             <input type="time" value={birthTime} onChange={e=>setBirthTime(e.target.value)} style={{...inputStyle,colorScheme:"dark"}}/>
           </div>
           <div>
-            <label style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Luogo di nascita</label>
+            <label style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,display:"block",marginBottom:10}}>Luogo di nascita</label>
             <input type="text" value={birthCity} onChange={e=>setBirthCity(e.target.value)} placeholder="es. Milano, Italia" style={inputStyle} onFocus={focusIn} onBlur={focusOut}/>
           </div>
           {success && <p style={{color:"#2D8A4E",fontSize:13,margin:0}}>Profilo aggiornato.</p>}
@@ -98,7 +98,7 @@ export default function Settings() {
         </form>
 
         {/* Abbonamento */}
-        <h2 style={{fontSize:10,color:"rgba(246,246,244,.3)",letterSpacing:2.5,textTransform:"uppercase",fontWeight:600,marginBottom:14,animation:`fadeUp .6s ${S} .15s both`}}>Abbonamento</h2>
+        <h2 style={{fontSize:11,color:"rgba(246,246,244,.3)",letterSpacing:2,textTransform:"uppercase",fontWeight:600,marginBottom:14,animation:`fadeUp .6s ${S} .15s both`}}>Abbonamento</h2>
         <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.06)",borderRadius:16,padding:22,marginBottom:32,animation:`fadeUp .6s ${S} .2s both`}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:14}}>
             <span style={{fontSize:14,color:"rgba(246,246,244,.35)"}}>Piano</span>
