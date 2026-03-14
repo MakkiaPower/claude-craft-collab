@@ -16,7 +16,7 @@ export default function Login() {
     setError('')
     setLoading(true)
     const { error } = await oroscopoSupabase.auth.signInWithPassword({ email, password })
-    if (error) { setError('Email o password non validi.'); setLoading(false); return }
+    if (error) { setError(error.message); setLoading(false); return }
     navigate('/oroscopo/dashboard')
   }
 

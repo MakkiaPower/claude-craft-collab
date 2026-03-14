@@ -20,7 +20,7 @@ export default function Signup() {
     if (password.length < 6) { setError('La password deve avere almeno 6 caratteri.'); return }
     setLoading(true)
     const { data, error } = await oroscopoSupabase.auth.signUp({ email, password })
-    if (error) { setError('Errore nella registrazione. Riprova.'); setLoading(false); return }
+    if (error) { setError(error.message); setLoading(false); return }
     // Se Supabase richiede conferma email, data.session sarà null
     if (!data.session) {
       setError('')
