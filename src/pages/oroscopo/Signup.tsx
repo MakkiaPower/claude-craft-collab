@@ -54,6 +54,7 @@ export default function Signup() {
           <div style={{textAlign:"center",animation:`successIn .5s ${S} both`}}>
             <p style={{fontSize:20,fontWeight:800,color:"#F4C430",marginBottom:14}}>Controlla la tua email.</p>
             <p style={{fontSize:15,color:"rgba(246,246,244,.35)",lineHeight:1.7}}>Ti abbiamo inviato un link di conferma.</p>
+            <p style={{fontSize:13,color:"rgba(246,246,244,.4)",fontStyle:"italic",marginTop:16}}>Se non la trovi, controlla lo spam. Sicuro finisce l&igrave;, zio pera.</p>
             <Link to="/oroscopo/login" style={{display:"inline-block",marginTop:32,color:"#F4C430",fontSize:15,textDecoration:"none",fontWeight:700}}>Vai al login &rarr;</Link>
           </div>
         ) : (
