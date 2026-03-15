@@ -617,6 +617,16 @@ const Index = () => {
 
   const goOracle = () => { setTransitioning(true); setTimeout(() => setScreen("oracolo"), 400); };
   const goHome = () => { setTransitioning(false); setScreen("home"); };
+  const goProfile = () => {
+    const key = localStorage.getItem('oroscopo-auth');
+    if (key) {
+      try {
+        const parsed = JSON.parse(key);
+        if (parsed?.access_token) { navigate('/oroscopo/dashboard'); return; }
+      } catch { /* ignore */ }
+    }
+    navigate('/oroscopo/signup');
+  };
 
   if (screen === "oracolo") return <Oracle onBack={goHome} />;
 
@@ -642,14 +652,14 @@ const Index = () => {
 
       <div style={{width:"100%",maxWidth:380,display:"flex",flexDirection:"column",gap:"min(2.5vw,12px)"}}>
 
-        <div onClick={() => navigate("/oroscopo")} style={{background:"linear-gradient(135deg,rgba(244,196,48,.12),rgba(244,196,48,.04))",border:"1px solid rgba(244,196,48,.3)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`,WebkitTapHighlightColor:"transparent",position:"relative"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
+        <div onClick={goProfile} style={{background:"linear-gradient(135deg,rgba(244,196,48,.12),rgba(244,196,48,.04))",border:"1px solid rgba(244,196,48,.3)",borderRadius:"min(3.5vw,14px)",padding:"min(4.5vw,20px) min(5vw,22px)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",animation:`homeIn .7s ${SPRING} .1s both`,transition:`transform .2s ${SPRING}, box-shadow .2s`,WebkitTapHighlightColor:"transparent",position:"relative"}} onMouseDown={e => (e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e => (e.currentTarget.style.transform="scale(1)")} onMouseLeave={e => (e.currentTarget.style.transform="scale(1)")} onTouchStart={e => (e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e => (e.currentTarget.style.transform="scale(1)")}>
           <div style={{position:"absolute",top:-8,right:16,background:"#CC3333",borderRadius:6,padding:"3px 8px",fontSize:"min(2.2vw,8px)",fontWeight:700,color:"#F6F6F4",letterSpacing:1.5,textTransform:"uppercase",display:"flex",alignItems:"center",gap:4}}>
             <span style={{width:5,height:5,borderRadius:"50%",background:"#F6F6F4",animation:"holdPulse 2s ease-in-out infinite"}}/>
             NOVITÀ
           </div>
           <div style={{minWidth:0}}>
-            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3}}>OROSCOPO SU MISURA</div>
-            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.4)",marginTop:"min(1vw,4px)",fontWeight:400}}>Il tuo oroscopo personale. Ogni giorno.</div>
+            <div style={{fontSize:"min(4.5vw,18px)",fontWeight:800,letterSpacing:.3}}>IL TUO PROFILO BASTARDO</div>
+            <div style={{fontSize:"min(3.3vw,13px)",color:"rgba(246,246,244,.4)",marginTop:"min(1vw,4px)",fontWeight:400}}>Registrati gratis</div>
           </div>
           <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,196,48,.5)" strokeWidth="2" strokeLinecap="round" style={{width:18,height:18,flexShrink:0,marginLeft:8}}><path d="M9 18l6-6-6-6"/></svg>
         </div>
