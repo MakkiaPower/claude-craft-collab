@@ -66,15 +66,21 @@ export default function Dashboard() {
               </Card>
             </div>
 
-            {(horoscope.love || horoscope.work) && (
-              <div style={{display:"grid",gridTemplateColumns:horoscope.love && horoscope.work && window.innerWidth>=400 ? "1fr 1fr" : "1fr",gap:12,animation:`fadeUp .6s ${S} .1s both`}}>
-                {horoscope.love && <Card><Dot color="#CC3333"/><Label color="#CC3333">Amore</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.love}</p></Card>}
-                {horoscope.work && <Card><Dot color="#D4A843"/><Label color="#D4A843">Lavoro</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.work}</p></Card>}
+            {(horoscope.in_couple || horoscope.single) && (
+              <div style={{display:"grid",gridTemplateColumns:horoscope.in_couple && horoscope.single && window.innerWidth>=400 ? "1fr 1fr" : "1fr",gap:12,animation:`fadeUp .6s ${S} .1s both`}}>
+                {horoscope.in_couple && <Card><Dot color="#CC3333"/><Label color="#CC3333">In coppia</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.in_couple}</p></Card>}
+                {horoscope.single && <Card><Dot color="#B44ACE"/><Label color="#B44ACE">Da single</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.single}</p></Card>}
+              </div>
+            )}
+
+            {horoscope.work && (
+              <div style={{animation:`fadeUp .6s ${S} .15s both`}}>
+                <Card><Dot color="#D4A843"/><Label color="#D4A843">Lavoro & Soldi</Label><p style={{fontSize:15,lineHeight:1.75,margin:"10px 0 0",color:"rgba(246,246,244,.85)"}}>{horoscope.work}</p></Card>
               </div>
             )}
 
             {horoscope.advice && (
-              <div style={{background:"rgba(244,196,48,.04)",border:"1px solid rgba(244,196,48,.15)",borderRadius:16,padding:"20px 22px",animation:`fadeUp .6s ${S} .15s both`}}>
+              <div style={{background:"rgba(244,196,48,.04)",border:"1px solid rgba(244,196,48,.15)",borderRadius:16,padding:"20px 22px",animation:`fadeUp .6s ${S} .2s both`}}>
                 <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4C430" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                   <Label color="#F4C430">Consiglio del giorno</Label>

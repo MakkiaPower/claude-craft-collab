@@ -24,7 +24,8 @@ export interface Horoscope {
   user_id: string
   date: string
   overview: string
-  love: string | null
+  in_couple: string | null
+  single: string | null
   work: string | null
   advice: string | null
   transits: { name: string; description: string }[] | null

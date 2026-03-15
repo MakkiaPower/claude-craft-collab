@@ -46,8 +46,9 @@ export default function Archive() {
                   {isOpen && (
                     <div style={{padding:"0 22px 22px",display:"flex",flexDirection:"column",gap:14}}>
                       <Section dot="#F4C430" label="Panoramica" text={h.overview}/>
-                      {h.love && <Section dot="#CC3333" label="Amore" text={h.love}/>}
-                      {h.work && <Section dot="#D4A843" label="Lavoro" text={h.work}/>}
+                      {h.in_couple && <Section dot="#CC3333" label="In coppia" text={h.in_couple}/>}
+                      {h.single && <Section dot="#B44ACE" label="Da single" text={h.single}/>}
+                      {h.work && <Section dot="#D4A843" label="Lavoro & Soldi" text={h.work}/>}
                       {h.advice && <Section dot="#F4C430" label="Consiglio" text={h.advice} star/>}
                     </div>
                   )}

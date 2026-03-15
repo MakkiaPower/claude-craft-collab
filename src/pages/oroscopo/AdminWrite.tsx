@@ -16,7 +16,8 @@ export default function AdminWrite() {
   const [targetProfile, setTargetProfile] = useState<Profile | null>(null)
   const [existingId, setExistingId] = useState<string | null>(null)
   const [overview, setOverview] = useState('')
-  const [love, setLove] = useState('')
+  const [inCouple, setInCouple] = useState('')
+  const [single, setSingle] = useState('')
   const [work, setWork] = useState('')
   const [advice, setAdvice] = useState('')
   const [transitsJson, setTransitsJson] = useState('')
@@ -44,7 +45,8 @@ export default function AdminWrite() {
       if (existing) {
         setExistingId(existing.id)
         setOverview(existing.overview || '')
-        setLove(existing.love || '')
+        setInCouple(existing.in_couple || '')
+        setSingle(existing.single || '')
         setWork(existing.work || '')
         setAdvice(existing.advice || '')
         setTransitsJson(existing.transits ? JSON.stringify(existing.transits, null, 2) : '')
@@ -61,7 +63,7 @@ export default function AdminWrite() {
     if (transitsJson.trim()) {
       try { transits = JSON.parse(transitsJson) } catch { setError('JSON transiti non valido.'); setSaving(false); return }
     }
-    const data = { user_id: userId!, date: today, overview, love: love || null, work: work || null, advice: advice || null, transits }
+    const data = { user_id: userId!, date: today, overview, in_couple: inCouple || null, single: single || null, work: work || null, advice: advice || null, transits }
     const result = existingId
       ? await oroscopoSupabase.from('horoscopes').update(data).eq('id', existingId)
       : await oroscopoSupabase.from('horoscopes').insert(data)
@@ -95,16 +97,20 @@ export default function AdminWrite() {
                 <textarea value={overview} onChange={e=>setOverview(e.target.value)} required rows={6} style={textareaStyle} placeholder="La panoramica dell'oroscopo di oggi..."/>
               </div>
               <div>
-                <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Amore</label>
-                <textarea value={love} onChange={e=>setLove(e.target.value)} rows={3} style={textareaStyle} placeholder="Sezione amore..."/>
+                <label style={{fontSize:10,color:"#CC3333",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>In coppia</label>
+                <textarea value={inCouple} onChange={e=>setInCouple(e.target.value)} rows={3} style={textareaStyle} placeholder="Per chi è in relazione..."/>
               </div>
               <div>
-                <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Lavoro</label>
-                <textarea value={work} onChange={e=>setWork(e.target.value)} rows={3} style={textareaStyle} placeholder="Sezione lavoro..."/>
+                <label style={{fontSize:10,color:"#B44ACE",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Da single</label>
+                <textarea value={single} onChange={e=>setSingle(e.target.value)} rows={3} style={textareaStyle} placeholder="Per chi è solo..."/>
               </div>
               <div>
-                <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Consiglio del giorno</label>
-                <textarea value={advice} onChange={e=>setAdvice(e.target.value)} rows={3} style={textareaStyle} placeholder="Il consiglio di oggi..."/>
+                <label style={{fontSize:10,color:"#D4A843",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Lavoro & Soldi</label>
+                <textarea value={work} onChange={e=>setWork(e.target.value)} rows={3} style={textareaStyle} placeholder="Lavoro e finanze..."/>
+              </div>
+              <div>
+                <label style={{fontSize:10,color:"#F4C430",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Consiglio del giorno</label>
+                <textarea value={advice} onChange={e=>setAdvice(e.target.value)} rows={3} style={textareaStyle} placeholder="Breve, diretto. Ultima frase in CAPS LOCK."/>
               </div>
               <div>
                 <label style={{fontSize:10,color:"rgba(246,246,244,.4)",letterSpacing:2,textTransform:"uppercase",fontWeight:500,display:"block",marginBottom:8}}>Transiti (JSON)</label>
