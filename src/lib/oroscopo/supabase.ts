@@ -19,6 +19,8 @@ export const oroscopoSupabase = createClient(
       persistSession: true,
       autoRefreshToken: true,
       storageKey: 'oroscopo-auth',
+      flowType: 'implicit',
+      detectSessionInUrl: false,
     },
   }
 )

@@ -17,17 +17,50 @@ export default function Onboarding() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!user) { setError('Sessione scaduta.'); return }
     setError('')
     setLoading(true)
-    const { error: err } = await oroscopoSupabase.from('profiles').update({
-      birth_date: birthDate,
-      birth_time: unknownTime ? null : birthTime || null,
-      birth_city: birthCity,
-    }).eq('id', user.id)
-    if (err) { setError('Errore nel salvataggio.'); setLoading(false); return }
-    await refreshProfile()
-    navigate('/oroscopo/dashboard')
+
+    try {
+      // Prendi sempre l'utente fresco dalla sessione per evitare problemi di lock
+      const { data: { user: currentUser }, error: authErr } = await oroscopoSupabase.auth.getUser()
+
+      if (authErr || !currentUser) {
+        console.error('[Onboarding] Auth error:', authErr)
+        // Fallback: prova dal context
+        if (!user) {
+          setError('Sessione scaduta. Torna al login.')
+          setLoading(false)
+          return
+        }
+      }
+
+      const userId = currentUser?.id || user?.id
+      if (!userId) {
+        setError('Sessione scaduta. Torna al login.')
+        setLoading(false)
+        return
+      }
+
+      const { error: updateErr } = await oroscopoSupabase.from('profiles').update({
+        birth_date: birthDate,
+        birth_time: unknownTime ? null : birthTime || null,
+        birth_city: birthCity,
+      }).eq('id', userId)
+
+      if (updateErr) {
+        console.error('[Onboarding] Update error:', updateErr)
+        setError('Errore: ' + updateErr.message)
+        setLoading(false)
+        return
+      }
+
+      await refreshProfile()
+      navigate('/oroscopo/dashboard')
+    } catch (err) {
+      console.error('[Onboarding] Unexpected error:', err)
+      setError('Errore imprevisto. Riprova.')
+      setLoading(false)
+    }
   }
 
   const inputStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:16,outline:"none",boxSizing:"border-box",transition:`border .3s ${S}, background .3s`}
