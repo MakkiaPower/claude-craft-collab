@@ -24,17 +24,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   const fetchProfile = useCallback(async (userId: string) => {
-    const { data } = await oroscopoSupabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
-    setProfile(data as Profile | null)
+    try {
+      const { data } = await oroscopoSupabase
+        .from('profiles').select('*').eq('id', userId).maybeSingle()
+      setProfile(data as Profile | null)
+    } catch (e) {
+      console.error('[Auth] fetchProfile error:', e)
+    }
   }, [])
 
   const refreshProfile = useCallback(async () => {
-    const { data: { user: u } } = await oroscopoSupabase.auth.getUser()
-    if (u) await fetchProfile(u.id)
+    try {
+      const { data: { user: u } } = await oroscopoSupabase.auth.getUser()
+      if (u) await fetchProfile(u.id)
+    } catch (e) {
+      console.error('[Auth] refreshProfile error:', e)
+    }
   }, [fetchProfile])
 
   const signOut = useCallback(async () => {
@@ -45,42 +50,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let mounted = true
+    let initDone = false
 
-    // Carica sessione iniziale rapidamente
-    oroscopoSupabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!mounted) return
-      const u = session?.user ?? null
-      setUser(u)
-      if (u) {
-        await fetchProfile(u.id)
-      }
-      if (mounted) setLoading(false)
-    })
-
+    // onAuthStateChange gestisce sia l'init che gli aggiornamenti
     const { data: { subscription } } = oroscopoSupabase.auth.onAuthStateChange(
-      async (event, session) => {
+      async (_event, session) => {
         if (!mounted) return
         const u = session?.user ?? null
         setUser(u)
-        if (u && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+
+        if (u) {
+          // Fetch profilo solo se non l'abbiamo già per questo utente
           await fetchProfile(u.id)
-        } else if (!u) {
+        } else {
           setProfile(null)
         }
-        if (mounted) setLoading(false)
+
+        if (!initDone) {
+          initDone = true
+          if (mounted) setLoading(false)
+        }
       }
     )
 
-    return () => { mounted = false; subscription.unsubscribe() }
+    // Safety: se dopo 3s non è arrivato nessun evento, forza loading=false
+    const safety = setTimeout(() => {
+      if (mounted && !initDone) {
+        initDone = true
+        setLoading(false)
+      }
+    }, 3000)
+
+    return () => { mounted = false; clearTimeout(safety); subscription.unsubscribe() }
   }, [fetchProfile])
 
   const value = useMemo(() => ({
     user, profile, loading, signOut, refreshProfile,
   }), [user, profile, loading, signOut, refreshProfile])
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

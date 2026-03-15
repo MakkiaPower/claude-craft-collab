@@ -15,9 +15,17 @@ export default function Login() {
     e.preventDefault()
     setError('')
     setLoading(true)
-    const { error } = await oroscopoSupabase.auth.signInWithPassword({ email, password })
-    if (error) { setError(error.message); setLoading(false); return }
-    navigate('/oroscopo/dashboard', { replace: true })
+    try {
+      const { error } = await Promise.race([
+        oroscopoSupabase.auth.signInWithPassword({ email, password }),
+        new Promise<never>((_, rej) => setTimeout(() => rej(new Error('TIMEOUT')), 10000)),
+      ])
+      if (error) { setError(error.message); setLoading(false); return }
+      navigate('/oroscopo/dashboard', { replace: true })
+    } catch (err) {
+      setError(err instanceof Error && err.message === 'TIMEOUT' ? 'Timeout \u2014 riprova.' : 'Errore imprevisto.')
+      setLoading(false)
+    }
   }, [email, password, navigate])
 
   return (

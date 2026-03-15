@@ -5,6 +5,13 @@ import { oroscopoSupabase } from '@/lib/oroscopo/supabase'
 const S = `cubic-bezier(.22,1,.36,1)`
 const CSS = `@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes successIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}`
 
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), ms)),
+  ])
+}
+
 export default function Signup() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -20,10 +27,24 @@ export default function Signup() {
     if (password !== confirmPassword) { setError('Le password non coincidono.'); return }
     if (password.length < 6) { setError('La password deve avere almeno 6 caratteri.'); return }
     setLoading(true)
-    const { data, error } = await oroscopoSupabase.auth.signUp({ email, password })
-    if (error) { setError(error.message); setLoading(false); return }
-    if (!data.session) { setConfirmEmail(true); setLoading(false); return }
-    navigate('/oroscopo/onboarding', { replace: true })
+
+    try {
+      const { data, error } = await withTimeout(
+        oroscopoSupabase.auth.signUp({ email, password }),
+        10000
+      )
+      if (error) { setError(error.message); setLoading(false); return }
+      if (!data.session) { setConfirmEmail(true); setLoading(false); return }
+      // Naviga subito — l'AuthContext caricherà il profilo in background
+      navigate('/oroscopo/onboarding', { replace: true })
+    } catch (err) {
+      if (err instanceof Error && err.message === 'TIMEOUT') {
+        setError('Timeout \u2014 riprova.')
+      } else {
+        setError('Errore imprevisto. Riprova.')
+      }
+      setLoading(false)
+    }
   }, [email, password, confirmPassword, navigate])
 
   return (
