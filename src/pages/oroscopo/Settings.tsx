@@ -64,7 +64,7 @@ export default function Settings() {
   const inputStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:16,outline:"none",boxSizing:"border-box",transition:`border .3s ${S}, background .3s`}
   const focusIn = (e: React.FocusEvent<HTMLInputElement>) => {e.currentTarget.style.borderColor="rgba(244,196,48,.5)";e.currentTarget.style.background="rgba(246,246,244,.07)"}
   const focusOut = (e: React.FocusEvent<HTMLInputElement>) => {e.currentTarget.style.borderColor="rgba(246,246,244,.1)";e.currentTarget.style.background="rgba(246,246,244,.05)"}
-  const planLabel = profile?.subscription_plan === 'yearly' ? 'Annuale \u2014 49,99\u20AC/anno' : 'Mensile \u2014 5,99\u20AC/mese'
+  const planLabel = profile?.subscription_plan === 'yearly' ? 'Annuale \u2014 99,99\u20AC/anno' : 'Mensile \u2014 9,99\u20AC/mese'
 
   return (
     <div style={{minHeight:"100dvh",background:"#0a0a0a",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4",paddingBottom:84}}>

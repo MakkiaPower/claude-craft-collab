@@ -42,7 +42,7 @@ export default function Pricing() {
           <div style={{background:"rgba(246,246,244,.03)",border:"1px solid rgba(246,246,244,.08)",borderRadius:16,padding:22,display:"flex",flexDirection:"column"}}>
             <div style={{fontSize:15,fontWeight:800,marginBottom:6}}>Mensile</div>
             <div style={{marginBottom:14}}>
-              <span style={{fontSize:30,fontWeight:900,letterSpacing:-.5}}>5,99&euro;</span>
+              <span style={{fontSize:30,fontWeight:900,letterSpacing:-.5}}>9,99&euro;</span>
               <span style={{fontSize:13,color:"rgba(246,246,244,.3)"}}>/mese</span>
             </div>
             <p style={{fontSize:12,color:"rgba(246,246,244,.3)",flex:1,marginBottom:18,lineHeight:1.5}}>Cancella quando vuoi.</p>
@@ -53,13 +53,13 @@ export default function Pricing() {
 
           {/* Annuale */}
           <div style={{background:"rgba(244,196,48,.05)",border:"1px solid rgba(244,196,48,.25)",borderRadius:16,padding:22,display:"flex",flexDirection:"column",position:"relative"}}>
-            <span style={{position:"absolute",top:-9,right:14,background:"#F4C430",color:"#0a0a0a",borderRadius:8,padding:"4px 10px",fontSize:9,fontWeight:800,letterSpacing:1,textTransform:"uppercase"}}>-30%</span>
+            <span style={{position:"absolute",top:-9,right:14,background:"#F4C430",color:"#0a0a0a",borderRadius:8,padding:"4px 10px",fontSize:9,fontWeight:800,letterSpacing:1,textTransform:"uppercase"}}>2 mesi gratis</span>
             <div style={{fontSize:15,fontWeight:800,marginBottom:6}}>Annuale</div>
             <div style={{marginBottom:14}}>
-              <span style={{fontSize:30,fontWeight:900,letterSpacing:-.5}}>49,99&euro;</span>
+              <span style={{fontSize:30,fontWeight:900,letterSpacing:-.5}}>99,99&euro;</span>
               <span style={{fontSize:13,color:"rgba(246,246,244,.3)"}}>/anno</span>
             </div>
-            <p style={{fontSize:12,color:"rgba(246,246,244,.3)",flex:1,marginBottom:18,lineHeight:1.5}}>Per i bastardi convinti.</p>
+            <p style={{fontSize:12,color:"rgba(246,246,244,.3)",flex:1,marginBottom:18,lineHeight:1.5}}>2 mesi gratis. Risparmi il 17%.</p>
             <button onClick={()=>handleCheckout('yearly')} disabled={loading!==null} style={{background:"#F4C430",border:"none",color:"#0a0a0a",borderRadius:12,padding:"14px",fontSize:14,fontWeight:700,cursor:"pointer",opacity:loading?0.5:1,transition:`transform .15s ${S}`}} onMouseDown={e=>(e.currentTarget.style.transform="scale(0.96)")} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")} onTouchStart={e=>(e.currentTarget.style.transform="scale(0.96)")} onTouchEnd={e=>(e.currentTarget.style.transform="scale(1)")}>
               {loading==='yearly'?'...':'Abbonati'}
             </button>
