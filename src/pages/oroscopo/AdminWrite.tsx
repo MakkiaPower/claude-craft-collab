@@ -75,7 +75,7 @@ export default function AdminWrite() {
   if (authLoading || loading) return <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",alignItems:"center",justifyContent:"center",color:"#F6F6F4",fontFamily:"'Helvetica Neue',sans-serif"}}><p style={{color:"rgba(246,246,244,.4)"}}>Caricamento...</p></div>
   if (!targetProfile) return <div style={{minHeight:"100dvh",background:"#0a0a0a",display:"flex",alignItems:"center",justifyContent:"center",color:"#F6F6F4"}}><p>Utente non trovato.</p></div>
 
-  const textareaStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.04)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:12,padding:"14px 16px",fontSize:15,outline:"none",boxSizing:"border-box",resize:"vertical",fontFamily:"inherit",transition:"border .2s"}
+  const textareaStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:15,outline:"none",boxSizing:"border-box",resize:"vertical",fontFamily:"inherit",transition:`border .2s ${S}, background .2s`}
 
   return (
     <div style={{minHeight:"100dvh",background:"#0a0a0a",fontFamily:"'Helvetica Neue',Helvetica,Arial,sans-serif",color:"#F6F6F4"}}>
