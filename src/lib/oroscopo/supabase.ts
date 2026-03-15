@@ -10,6 +10,12 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   })
 }
 
+// Lock no-op per evitare conflitti con il client Supabase principale del sito
+// che usa lo stesso navigator.locks API
+const noopLock = async (_name: string, _acquireTimeout: number, fn: () => Promise<unknown>) => {
+  return await fn()
+}
+
 export const oroscopoSupabase = createClient(
   SUPABASE_URL || 'https://placeholder.supabase.co',
   SUPABASE_ANON_KEY || 'placeholder',
@@ -21,6 +27,7 @@ export const oroscopoSupabase = createClient(
       storageKey: 'oroscopo-auth',
       flowType: 'implicit',
       detectSessionInUrl: false,
+      lock: noopLock as never,
     },
   }
 )
