@@ -20,7 +20,6 @@ export default function Dashboard() {
     if (authLoading) return
     if (!user) { navigate('/oroscopo/login'); return }
     if (!profile?.birth_date) { navigate('/oroscopo/onboarding'); return }
-    if (profile.subscription_status !== 'active') { navigate('/oroscopo/pricing'); return }
 
     const today = getLocalToday()
     oroscopoSupabase.from('horoscopes').select('*').eq('user_id', user.id).eq('date', today).single()
@@ -105,6 +104,17 @@ export default function Dashboard() {
                 Il tuo oroscopo di oggi arriva tra poco. Le stelle stanno ancora litigando.
               </p>
             </Card>
+          </div>
+        )}
+
+        {/* Banner abbonamento per utenti non abbonati */}
+        {profile?.subscription_status !== 'active' && (
+          <div onClick={()=>navigate('/oroscopo/pricing')} style={{background:"rgba(244,196,48,.06)",border:"1px solid rgba(244,196,48,.2)",borderRadius:16,padding:"18px 22px",marginTop:16,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",transition:`transform .15s ${S}`,animation:`fadeUp .6s ${S} .25s both`}} onMouseDown={e=>(e.currentTarget.style.transform="scale(0.98)")} onMouseUp={e=>(e.currentTarget.style.transform="scale(1)")} onTouchStart={e=>(e.currentTarget.style.transform="scale(0.98)")} onTouchEnd={e=>(e.currentTarget.style.transform="scale(1)")}>
+            <div>
+              <p style={{fontSize:14,fontWeight:700,color:"#F4C430",margin:"0 0 4px"}}>Abbonati all'oroscopo su misura</p>
+              <p style={{fontSize:12,color:"rgba(246,246,244,.35)",margin:0}}>Ricevi il tuo oroscopo personalizzato ogni giorno.</p>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#F4C430" strokeWidth="2" strokeLinecap="round" style={{width:18,height:18,flexShrink:0,marginLeft:12,opacity:.5}}><path d="M9 18l6-6-6-6"/></svg>
           </div>
         )}
       </div>

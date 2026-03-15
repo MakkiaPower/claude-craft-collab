@@ -27,7 +27,7 @@ export default function Onboarding() {
     }).eq('id', user.id)
     if (err) { setError('Errore nel salvataggio.'); setLoading(false); return }
     await refreshProfile()
-    navigate('/oroscopo/pricing')
+    navigate('/oroscopo/dashboard')
   }
 
   const inputStyle: React.CSSProperties = {width:"100%",background:"rgba(246,246,244,.05)",border:"1px solid rgba(246,246,244,.1)",color:"#F6F6F4",borderRadius:14,padding:"16px 18px",fontSize:16,outline:"none",boxSizing:"border-box",transition:`border .3s ${S}, background .3s`}

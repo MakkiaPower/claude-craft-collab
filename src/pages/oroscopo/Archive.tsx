@@ -19,7 +19,6 @@ export default function Archive() {
   useEffect(() => {
     if (authLoading) return
     if (!user) { navigate('/oroscopo/login'); return }
-    if (profile && profile.subscription_status !== 'active') { navigate('/oroscopo/pricing'); return }
     oroscopoSupabase.from('horoscopes').select('*').eq('user_id', user.id).order('date', { ascending: false })
       .then(({ data }) => { setHoroscopes((data || []) as Horoscope[]); setLoading(false) })
   }, [user, authLoading, navigate, profile])
