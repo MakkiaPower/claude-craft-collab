@@ -622,7 +622,7 @@ const Index = () => {
     if (key) {
       try { const p = JSON.parse(key); if (p?.access_token) { navigate('/oroscopo/dashboard'); return; } } catch { /* */ }
     }
-    navigate('/oroscopo/signup');
+    navigate('/oroscopo');
   };
 
   if (screen === "oracolo") return <Oracle onBack={goHome} />;
